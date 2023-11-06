@@ -10,7 +10,12 @@ package edu.ntnu.stud;
  */
 public class TrainDispatchApp {
   public static void main(String[] args){
+    TrainDispatchApp trainDispatchApp = new TrainDispatchApp();
+    trainDispatchApp.start();
 
   }
   // TODO: Fill in the main method and any other methods you need.
+public void start(){
+
+}
 }
