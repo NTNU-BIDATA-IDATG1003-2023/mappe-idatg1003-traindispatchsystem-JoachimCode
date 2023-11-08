@@ -101,10 +101,18 @@ public class TrainDeparture {
     }
   }
 
+  /**
+   * This method returns the line of the train departure.
+   */
   public String getLine() {
     return line;
   }
 
+  /**
+   * This method sets the line of the train departure. It has a check to see if the line is empty or null,
+   * and sets the value to "invalid" if it does not pass the test.
+   * @param line
+   */
   public void setLine(String line) {
     if(line == null || line.isEmpty()){
       this.line = "invalid";
@@ -114,10 +122,19 @@ public class TrainDeparture {
     }
   }
 
+  /**
+   * This method returns the train number of the train departure.
+   * @return
+   */
   public int getTrainNumber() {
     return trainNumber;
   }
 
+  /**
+   * This method sets the train number of the train departure. It has a check to see if the train number is negative,
+   * and sets the value to -1 if it does not pass the test, so it can be handled later.
+   * @param trainNumber
+   */
   public void setTrainNumber(int trainNumber) {
     if(trainNumber < 0){
       this.trainNumber = -1;
@@ -127,10 +144,19 @@ public class TrainDeparture {
     }
   }
 
+  /**
+   * This method returns the destination of the train departure.
+   * @return
+   */
   public String getDestination() {
     return destination;
   }
 
+  /**
+   * This method sets the destination of the train departure. It has a check to see if the destination is empty or null,
+   * and sets the value to "invalid" if it does not pass the test.
+   * @param destination
+   */
   public void setDestination(String destination) {
     if(destination == null || destination.isEmpty()){
       this.destination = "invalid";
@@ -140,10 +166,18 @@ public class TrainDeparture {
     }
   }
 
+  /**
+   * This method returns the track of the train departure.
+   * @return the track that the train is coming on.
+   */
   public int getTrack() {
     return track;
   }
 
+  /**
+   * This method sets the track of the train departure. It has a check to see if the track is negative,
+   * @param track
+   */
   public void setTrack(int track) {
     if(track < 0){
       this.track = -1;
@@ -153,11 +187,19 @@ public class TrainDeparture {
     }
   }
 
+  /**
+   * This method returns the delay minutes of the train departure.
+   * @return
+   */
   public int getDelayMinutes() {
     return delayMinutes;
   }
 
-
+  /**
+   * This method sets the delay minutes of the train departure. It has a check to see if the delay minutes is negative,
+   * and sets the value to -1 if it does not pass the test, so it can be handled later.
+   * @param delayMinutes
+   */
   public void setDelayMinutes(int delayMinutes) {
     if (delayMinutes < 0) {
       this.delayMinutes = -1;
