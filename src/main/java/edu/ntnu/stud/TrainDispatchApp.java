@@ -15,7 +15,11 @@ public class TrainDispatchApp {
 
   }
   // TODO: Fill in the main method and any other methods you need.
-public void start(){
+  private void start(){
 
-}
+  }
+
+  private void innit(){
+
+  }
 }

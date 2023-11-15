@@ -1,5 +1,6 @@
 package edu.ntnu.stud;
-import java.time.LocalTime;
+
+//import java.time.LocalTime;
 /**
  * The {@code TrainDeparture} class represents a TrainDeparture.
  * All {@code TrainDeparture}s have departure time,
@@ -61,6 +62,9 @@ public class TrainDeparture {
   private int delayMinutes;
   /**
    * This is the constructor which sets the fields of the train departure.
+   * The constructor is overloaded, with two additional constructors, that
+   * makes track and delayMinutes optional. This is because the user is not
+   * always aware of the track or the is no delay, and therefore it is not required.
    *
    * @param departureTime the departure time of the train departure.
    * @param line          the line of the train departure.
@@ -80,7 +84,28 @@ public class TrainDeparture {
     setDelayMinutes(delayMinutes);
   }
 
+  public TrainDeparture(int departureTime, String line, int trainNumber,
+                        int track, String destination) {
+    setDepartureTime(departureTime);
+    setLine(line);
+    setTrainNumber(trainNumber);
+    setDestination(destination);
+    setTrack(track);
+    setDelayMinutes(0);
+  }
+
+  public TrainDeparture(int departureTime, String line, int trainNumber
+                        , String destination, int delayMinutes) {
+    setDepartureTime(departureTime);
+    setLine(line);
+    setTrainNumber(trainNumber);
+    setDestination(destination);
+    setTrack(0);
+    setDelayMinutes(delayMinutes);
+  }
+
   /**
+   *
    * This method returns the departure time of the train departure.
    * @return departureTime is the departure time of the train departure.
    */
@@ -89,14 +114,14 @@ public class TrainDeparture {
   }
 
   /**
-   * This method sets the departure time of the train departure.
+   *
+   * <p>This method sets the departure time of the train departure. </p>
    * @param departureTime is the departure time of the train departure.
    */
   public void setDepartureTime(int departureTime) {
-    if(departureTime < 0){
+    if (departureTime < 0) {
       this.departureTime = -1;
-    }
-    else {
+    } else {
       this.departureTime = departureTime;
     }
   }
@@ -109,22 +134,22 @@ public class TrainDeparture {
   }
 
   /**
-   * This method sets the line of the train departure. It has a check to see if the line is empty or null,
+   * This method sets the line of the train departure.
+   * It has a check to see if the line is empty or null,
    * and sets the value to "invalid" if it does not pass the test.
-   * @param line
+   * @param line is the line of the traindeparture.
    */
   public void setLine(String line) {
-    if(line == null || line.isEmpty()){
+    if (line == null || line.isEmpty()) {
       this.line = "invalid";
-    }
-    else {
+    } else {
       this.line = line;
     }
   }
 
   /**
    * This method returns the train number of the train departure.
-   * @return
+   * @return trainNumber the train number of the train departure.
    */
   public int getTrainNumber() {
     return trainNumber;
@@ -198,7 +223,7 @@ public class TrainDeparture {
   /**
    * This method sets the delay minutes of the train departure. It has a check to see if the delay minutes is negative,
    * and sets the value to -1 if it does not pass the test, so it can be handled later.
-   * @param delayMinutes
+   * @param delayMinutes the delay minutes of the train departure.
    */
   public void setDelayMinutes(int delayMinutes) {
     if (delayMinutes < 0) {
