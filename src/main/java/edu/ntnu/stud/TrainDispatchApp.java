@@ -9,17 +9,24 @@ package edu.ntnu.stud;
  * @since 4/10/2023
  */
 public class TrainDispatchApp {
+  TrainStation trainStation;
   public static void main(String[] args){
     TrainDispatchApp trainDispatchApp = new TrainDispatchApp();
     trainDispatchApp.start();
 
-  }
-  // TODO: Fill in the main method and any other methods you need.
-  private void start(){
 
+
+  }
+  private void start(){
+    trainStation = new TrainStation();
+    innit();
+    trainStation.testMethodPrintTable();
   }
 
   private void innit(){
-
+    trainStation.addTrain(new TrainDeparture(12, "A", 1, "Oslo", 1, 0));
+    trainStation.addTrain(new TrainDeparture(13, "B", 2, "Trondheim", 2, 20));
+    trainStation.addTrain(new TrainDeparture(14, "C", 3, "Bergen", 3, 0));
+    trainStation.addTrain(new TrainDeparture(15, "D", 4, "Stavanger", 4, 0));
   }
 }

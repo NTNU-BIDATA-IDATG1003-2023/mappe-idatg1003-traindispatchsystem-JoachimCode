@@ -232,4 +232,9 @@ public class TrainDeparture {
       this.delayMinutes = delayMinutes;
     }
   }
+
+  @Override
+  public String toString(){
+    return "Departure time: " + departureTime + " Line: " + line + " Train number: " + trainNumber + " Destination: " + destination + " Track: " + track + " Delay minutes: " + delayMinutes;
+  }
 }

@@ -6,8 +6,7 @@ import java.util.Iterator;
 public class TrainStation {
   private int currentTime;
   private HashMap<Integer, TrainDeparture> trainsDepartures;
-  public TrainStation(int currentTime){
-    this.currentTime = currentTime;
+  public TrainStation(){
     trainsDepartures = new HashMap<>();
   }
 
@@ -33,11 +32,15 @@ public class TrainStation {
   }
 
   public Iterator<TrainDeparture> getSortedDepartureList(){
-    return trainsDepartures.values().stream().sorted((departure1, departure2) -> departure1.getDepartureTime() - departure2.getDepartureTime()).iterator(
+    return trainsDepartures.values().stream().sorted((departure1, departure2) -> departure1.getDepartureTime() - departure2.getDepartureTime()).iterator();
   }
 
   public void changeClock(int newTime){
     currentTime = newTime;
+  }
+
+  public void testMethodPrintTable(){
+    trainsDepartures.values().forEach(System.out::println);
   }
 
 
