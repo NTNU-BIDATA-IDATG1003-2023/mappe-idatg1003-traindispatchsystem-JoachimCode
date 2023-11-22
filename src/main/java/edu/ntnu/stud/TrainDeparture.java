@@ -10,7 +10,7 @@ package edu.ntnu.stud;
  * <p>Example:
  *
  * <blockquote><pre>
- *     TrainDeparture trainDeparture = new trainDeparture(PARAMETERE);
+ *     TrainDeparture trainDeparture = new trainDeparture(PARAMETERS);
  * </pre></blockquote>
  *
  * <p>The class {@code TrainDeparture} includes methods for accessors and mutators.

@@ -1,5 +1,7 @@
 package edu.ntnu.stud;
 
+import edu.ntnu.stud.gui.UserInterface;
+
 /**
  * This is the main class for the train dispatch application. It creates instances of train departures and
  * uses its info to display the correct data.
@@ -10,6 +12,7 @@ package edu.ntnu.stud;
  */
 public class TrainDispatchApp {
   TrainStation trainStation;
+  UserInterface userInterface;
   public static void main(String[] args){
     TrainDispatchApp trainDispatchApp = new TrainDispatchApp();
     trainDispatchApp.start();
@@ -20,7 +23,8 @@ public class TrainDispatchApp {
   private void start(){
     trainStation = new TrainStation();
     innit();
-    trainStation.testMethodPrintTable();
+    userInterface = new UserInterface(trainStation);
+    userInterface.initialize();
   }
 
   private void innit(){

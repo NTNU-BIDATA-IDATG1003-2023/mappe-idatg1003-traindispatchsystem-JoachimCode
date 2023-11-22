@@ -1,13 +1,15 @@
 package edu.ntnu.stud;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class TrainStation {
-  private int currentTime;
+  private LocalTime currentTime;
   private HashMap<Integer, TrainDeparture> trainsDepartures;
   public TrainStation(){
     trainsDepartures = new HashMap<>();
+    currentTime = LocalTime.of(0, 0);
   }
 
   public boolean addTrain(TrainDeparture trainDeparture){
@@ -20,7 +22,7 @@ public class TrainStation {
   }
 
   public TrainDeparture getTrainFromTrainNumber(int trainNumber){
-    return trainsDepartures.get(trainNumber);
+    return trainsDepartures.get(trainNumber); 
   }
 
   public Iterator<TrainDeparture> getTrainFromDestination(String destination){
@@ -28,14 +30,14 @@ public class TrainStation {
   }
 
   public void removeEarlierDepartures(){
-    trainsDepartures.values().removeIf(departure -> (departure.getDepartureTime() + departure.getDelayMinutes()) < currentTime);
+    trainsDepartures.values().removeIf(departure -> (departure.getDepartureTime() + departure.getDelayMinutes()) < timeAsInt(currentTime));
   }
 
   public Iterator<TrainDeparture> getSortedDepartureList(){
     return trainsDepartures.values().stream().sorted((departure1, departure2) -> departure1.getDepartureTime() - departure2.getDepartureTime()).iterator();
   }
 
-  public void changeClock(int newTime){
+  public void changeClock(LocalTime newTime){
     currentTime = newTime;
   }
 
@@ -43,6 +45,13 @@ public class TrainStation {
     trainsDepartures.values().forEach(System.out::println);
   }
 
+  public LocalTime getTime(){
+    return currentTime;
+  }
+
+  public int timeAsInt(LocalTime time){
+    return time.getHour() * 100 + time.getMinute();
+  }
 
 
   /**
