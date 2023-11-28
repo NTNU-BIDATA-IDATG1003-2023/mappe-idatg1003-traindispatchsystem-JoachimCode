@@ -16,9 +16,6 @@ public class TrainDispatchApp {
   public static void main(String[] args){
     TrainDispatchApp trainDispatchApp = new TrainDispatchApp();
     trainDispatchApp.start();
-
-
-
   }
   private void start(){
     trainStation = new TrainStation();

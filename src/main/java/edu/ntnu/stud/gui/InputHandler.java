@@ -11,7 +11,10 @@ public class InputHandler {
   private Scanner scanner = new Scanner(System.in);
 
   public String getCommand(){
-    return  scanner.nextLine().toLowerCase();
+    return scanner.nextLine().toLowerCase();
+  }
+  public String getString(){
+    return scanner.nextLine();
   }
   public LocalTime getTimeInput(LocalTime currentTime){
     LocalTime returnTime = null;
@@ -22,5 +25,7 @@ public class InputHandler {
     }
     return returnTime;
   }
+
+
 }
 
