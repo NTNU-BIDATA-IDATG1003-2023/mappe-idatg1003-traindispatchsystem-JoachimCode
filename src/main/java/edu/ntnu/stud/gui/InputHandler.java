@@ -13,10 +13,14 @@ public class InputHandler {
   public String getCommand(){
     return  scanner.nextLine().toLowerCase();
   }
-  public LocalTime getTimeInput(){
+  public LocalTime getTimeInput(LocalTime currentTime){
+    LocalTime returnTime = null;
     String timeInput = scanner.nextLine();
-    LocalTime time = LocalTime.parse(timeInput);
-    return time;
+      //Copilot, note
+    if(timeInput.matches("([01]\\d|2[0-3]):([0-5]\\d)") && LocalTime.parse(timeInput).isAfter(currentTime)){
+      returnTime = LocalTime.parse(timeInput);
+    }
+    return returnTime;
   }
 }
 

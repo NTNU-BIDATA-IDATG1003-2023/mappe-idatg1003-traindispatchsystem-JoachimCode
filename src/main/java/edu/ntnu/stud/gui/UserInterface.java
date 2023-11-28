@@ -2,8 +2,8 @@ package edu.ntnu.stud.gui;
 
 import edu.ntnu.stud.TrainDeparture;
 import edu.ntnu.stud.TrainStation;
-
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 
 
@@ -27,7 +27,7 @@ public class UserInterface {
   public void initialize(){
     textPrinter.displayWelcome();
     textPrinter.displayEnterTimer();
-    trainStation.changeClock(inputHandler.getTimeInput());
+    trainStation.changeClock(inputHandler.getTimeInput(trainStation.getTime()));
     textPrinter.displayTrainDepartures(trainStation.getSortedDepartureList(), trainStation.getTime());
     menuSelect();
   }
@@ -36,21 +36,22 @@ public class UserInterface {
     while(running){
       String userCommand = inputHandler.getCommand();
       switch(userCommand){
-        case "/h":
+        case CommandVariables.HELP:
           textPrinter.displayCommands();
           break;
-        case "/display":
+        case CommandVariables.DISPLAY:
           displayTrainDepartures(trainStation.getSortedDepartureList(), trainStation.getTime());
           break;
-        case "/add":
+        case CommandVariables.ADD:
           break;
-        case "/remove":
-
+        case CommandVariables.REMOVE:
           break;
-        case "/edit":
-
+        case CommandVariables.EDIT:
           break;
-        case "/quit":
+        case CommandVariables.SET_TIME:
+          changeClock();
+          break;
+        case CommandVariables.QUIT:
           running = false;
           break;
         default:
@@ -65,7 +66,17 @@ public class UserInterface {
   }
 
   public void changeClock(){
-
+    textPrinter.displayEnterTimer();
+    LocalTime time = inputHandler.getTimeInput(trainStation.getTime());
+    if(time != null){
+      trainStation.changeClock(time);
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+      System.out.println(time.format(formatter));
+    }
+    else{
+      textPrinter.invalidTimeEntry();
+      changeClock();
+    }
   }
 
 
