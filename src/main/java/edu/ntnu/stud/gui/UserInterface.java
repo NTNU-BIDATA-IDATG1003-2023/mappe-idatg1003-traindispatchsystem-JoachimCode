@@ -71,17 +71,24 @@ public class UserInterface {
     String departureLine = getDepartureLine();
     String departureDestination = getDepartureDestination();
     int departureTrack = getDepartureTrack();
+    int delayMinutes = getDepartureDelay(departureTime);
 
   }
 
   public int getDepartureTime(){
     textPrinter.displayDepartureTimeInput();
-    LocalTime time = inputHandler.getTimeInput(trainStation.getTime());
-    if(time == null){
-      textPrinter.invalidTimeEntry();
-      getDepartureTime();
+    boolean validInput = false;
+    LocalTime timeInput = null;
+    while(!validInput){
+      timeInput = inputHandler.getTimeInput(trainStation.getTime());
+      if(timeInput != null){
+        validInput = true;
+      }
+      else{
+        textPrinter.invalidTimeEntry();
+      }
     }
-    return getTimeAsInt(time);
+    return getTimeAsInt(timeInput);
   }
 
   public String getDepartureLine(){
@@ -95,24 +102,35 @@ public class UserInterface {
 
   public int getDepartureTrack(){
     textPrinter.displayTrackInput();
-    String trackInput = inputHandler.getString();
-    if(!canConvertToInt(trackInput)) {
-      textPrinter.displayInvalidInt();
-      getDepartureTrack();
+    boolean validInput = false;
+    String trackInput = null;
+    while(!validInput){
+      trackInput = inputHandler.getString();
+      if(canConvertToInt(trackInput)){
+        validInput = true;
+      }
+      else{
+        textPrinter.displayInvalidInt();
+      }
     }
     return Integer.parseInt(trackInput);
   }
 
   public int getDepartureDelay(int departureTime){
     textPrinter.displayDelayInput();
-    String delayInput = inputHandler.getString();
-    if(!canConvertToInt(delayInput)){
-      textPrinter.displayInvalidInt();
-      getDepartureDelay(departureTime);
-    }
-    if(addDelay(departureTime, Integer.parseInt(delayInput)) == -1){
-      textPrinter.displayInvalidDelay();
-      getDepartureDelay(departureTime);
+    boolean validInput = false;
+    String delayInput = null;
+    while(!validInput){
+      delayInput = inputHandler.getString();
+      if(!canConvertToInt(delayInput)){
+        textPrinter.displayInvalidInt();
+      }
+      else if(addDelay(departureTime, Integer.parseInt(delayInput)) == -1){
+        textPrinter.displayInvalidDelay();
+      }
+      else{
+        validInput = true;
+      }
     }
     return Integer.parseInt(delayInput);
   }
