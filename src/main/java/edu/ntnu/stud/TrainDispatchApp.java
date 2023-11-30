@@ -25,9 +25,9 @@ public class TrainDispatchApp {
   }
 
   private void innit(){
-    trainStation.addTrain(new TrainDeparture(12, "A", 1, "Oslo", 1, 0));
-    trainStation.addTrain(new TrainDeparture(13, "B", 2, "Trondheim", 2, 20));
-    trainStation.addTrain(new TrainDeparture(14, "C", 3, "Bergen", 3, 0));
-    trainStation.addTrain(new TrainDeparture(15, "D", 4, "Stavanger", 4, 0));
+    trainStation.addTrain(new TrainDeparture(1224, "A", 2, "Oslo", -1, 0));
+    trainStation.addTrain(new TrainDeparture(1337, "B", 1, "Trondheim", 2, 20));
+    trainStation.addTrain(new TrainDeparture(1400, "C", 3, "Bergen", 3, 0));
+    trainStation.addTrain(new TrainDeparture(1515, "D", 4, "Stavanger", 4, 0));
   }
 }

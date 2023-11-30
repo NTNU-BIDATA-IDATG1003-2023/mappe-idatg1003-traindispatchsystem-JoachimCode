@@ -74,7 +74,7 @@ public class TrainDeparture {
    * @param delayMinutes  the delay minutes of the train departure.
    */
 
-  public TrainDeparture(int departureTime, String line, int trainNumber,
+  public TrainDeparture(int departureTime, String line,  int trainNumber,
       String destination, int track, int delayMinutes) {
     setDepartureTime(departureTime);
     setLine(line);
@@ -233,8 +233,17 @@ public class TrainDeparture {
     }
   }
 
-  @Override
-  public String toString(){
-    return "Departure time: " + departureTime + " Line: " + line + " Train number: " + trainNumber + " Destination: " + destination + " Track: " + track + " Delay minutes: " + delayMinutes;
+  public int getActualDepartureTime(){
+    int hours = departureTime / 100;
+    int minutes = departureTime % 100;
+
+    minutes += delayMinutes;
+    if (minutes >= 60) {
+      hours += minutes / 60;
+      minutes %= 60;
+    }
+    hours %= 24;
+    return hours * 100 + minutes;
   }
+
 }

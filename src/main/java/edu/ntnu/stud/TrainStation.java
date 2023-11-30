@@ -41,9 +41,6 @@ public class TrainStation {
     currentTime = newTime;
   }
 
-  public void testMethodPrintTable(){
-    trainDepartures.values().forEach(System.out::println);
-  }
 
   public LocalTime getTime(){
     return currentTime;

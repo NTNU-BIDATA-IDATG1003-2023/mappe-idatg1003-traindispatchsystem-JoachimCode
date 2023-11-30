@@ -11,7 +11,7 @@ import java.util.Iterator;
  */
 
 public class TextPrinter {
-
+  private final String SEPERATOR = "  |  ";
   public void displayWelcome(){
     System.out.println("Welcome to the train dispatch system!");
   }
@@ -33,16 +33,67 @@ public class TextPrinter {
     System.out.println("current time: " + currentTime);
     System.out.println("Train departures:");
     while(trainDepartures.hasNext()){
-      System.out.println(trainDepartures.next());
+      TrainDeparture currentTrainDeparture = trainDepartures.next();
+      if(currentTrainDeparture.getActualDepartureTime() >= currentTime.getHour() * 100 + currentTime.getMinute()){
+        System.out.println(getDepartureInformation(currentTrainDeparture));
+      }
     }
   }
 
-  public void displayInvalidCommand(){
-    System.out.println("Invalid command, type /h for help");
+  private String getDepartureInformation(TrainDeparture trainDeparture){
+    StringBuilder departureInfo = new StringBuilder("DepartureTime: ");
+    if(trainDeparture.getDelayMinutes() == 0) {
+      departureInfo.append(formatClock(trainDeparture.getDepartureTime()));
+    }
+    else{
+      departureInfo.append(strikethroughString(formatClock(trainDeparture.getDepartureTime())));
+      departureInfo.append(" ");
+      departureInfo.append(formatClock(trainDeparture.getDepartureTime() + trainDeparture.getDelayMinutes()));
+    }
+    departureInfo.append(SEPERATOR);
+    departureInfo.append("Line: ");
+    departureInfo.append(trainDeparture.getLine());
+    departureInfo.append(SEPERATOR);
+    departureInfo.append("Destination: ");
+    departureInfo.append(trainDeparture.getDestination());
+    departureInfo.append(SEPERATOR);
+    departureInfo.append("Track: ");
+    if(trainDeparture.getTrack() == -1){
+      departureInfo.append("TBA");
+    }
+    else{
+    departureInfo.append(trainDeparture.getTrack());
+    }
+    departureInfo.append(SEPERATOR);
+    departureInfo.append("Delay: ");
+    departureInfo.append(trainDeparture.getDelayMinutes());
+    departureInfo.append(SEPERATOR);
+    departureInfo.append("Train number: ");
+    departureInfo.append(trainDeparture.getTrainNumber());
+    return departureInfo.toString();
   }
 
-  public void displayEnterTime(){
-    System.out.println("What is the current time?");
+  public String formatClock(int time){
+    int hours = time / 100;
+    int minutes = time % 100;
+    return String.format("%02d:%02d", hours, minutes);
+  }
+
+  public void displayInvalidCommand(){
+    System.err.println("Invalid command, type /h for help");
+  }
+
+  public static String strikethroughString(String text) {
+    StringBuilder sb = new StringBuilder();
+    for (char c : text.toCharArray()) {
+      sb.append(c).append('\u0336'); // Using an ASCII character for strikethrough effect
+    }
+    return sb.toString();
+  }
+
+  public void displayEnterTime(LocalTime currentTime){
+    System.out.println("What time to you want to set?");
+    System.out.println("Current time is: " + currentTime);
     System.out.println("Use the format HH:MM");
     System.out.println("Enter time: ");
   }
@@ -65,7 +116,7 @@ public class TextPrinter {
 
   public void displayTrackInput(){
     System.out.println("What track is the train departing from?");
-    System.out.println("Type 0 if the track is unknown");
+    System.out.println("Type -1 if the track is unknown");
     System.out.println("The track must strictly be a number");
     System.out.println("Enter track: ");
   }
@@ -77,18 +128,30 @@ public class TextPrinter {
     System.out.println("Enter delay: ");
   }
 
+  public void displayTrainNumberInput(){
+    System.out.println("What is the train number?");
+    System.out.println("Enter train number: ");
+  }
   public void displayInvalidInt(){
-    System.out.println("Invalid input, please enter a number");
+    System.err.println("Invalid input, please enter a number");
     System.out.println("Try again!");
   }
 
   public void displayInvalidDelay(){
-    System.out.println("Invalid input, this delay with make the train depart outside this applications scope (The next day)");
+    System.err.println("Invalid input, this delay with make the train depart outside this applications scope (The next day)");
     System.out.println("Try again!");
   }
 
+  public void displayInvalidTrainNumber(){
+    System.err.println("Invalid train number, this train number is already in use");
+    System.out.println("Try again!");
+  }
+
+  public void displaySuccessfulAdd(){
+    System.out.println("Successfully added train departure");
+  }
   public void invalidTimeEntry(){
-    System.out.println("Invalid time entry, make sure you use the format HH:MM and that the time is after the current time ");
+    System.err.println("Invalid time entry, make sure you use the format HH:MM and that the time is after the current time ");
     System.out.println("Try again!");
   }
 }

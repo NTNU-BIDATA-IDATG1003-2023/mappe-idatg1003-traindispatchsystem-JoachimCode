@@ -26,8 +26,7 @@ public class UserInterface {
 
   public void initialize(){
     textPrinter.displayWelcome();
-    textPrinter.displayEnterTime();
-    trainStation.changeClock(inputHandler.getTimeInput(trainStation.getTime()));
+    changeClock();
     textPrinter.displayTrainDepartures(trainStation.getSortedDepartureList(), trainStation.getTime());
     textPrinter.displayHelp();
     menuSelect();
@@ -44,6 +43,7 @@ public class UserInterface {
           displayTrainDepartures(trainStation.getSortedDepartureList(), trainStation.getTime());
           break;
         case CommandVariables.ADD:
+          addTrain();
           break;
         case CommandVariables.REMOVE:
           break;
@@ -72,7 +72,17 @@ public class UserInterface {
     String departureDestination = getDepartureDestination();
     int departureTrack = getDepartureTrack();
     int delayMinutes = getDepartureDelay(departureTime);
-
+    boolean successfullyAdded = false;
+    while (!successfullyAdded){
+      int trainNumber = getTrainNumber();
+      if(trainStation.addTrain(new TrainDeparture(departureTime, departureLine, trainNumber, departureDestination, departureTrack, delayMinutes))){
+        successfullyAdded = true;
+        textPrinter.displaySuccessfulAdd();
+      }
+      else{
+        textPrinter.displayInvalidTrainNumber();
+      }
+    }
   }
 
   public int getDepartureTime(){
@@ -135,17 +145,49 @@ public class UserInterface {
     return Integer.parseInt(delayInput);
   }
 
-  public void changeClock(){
-    textPrinter.displayEnterTime();
-    LocalTime time = inputHandler.getTimeInput(trainStation.getTime());
-    if(time != null){
-      trainStation.changeClock(time);
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-      System.out.println(time.format(formatter));
+  public int getTrainNumber(){
+    textPrinter.displayTrainNumberInput();
+    boolean validInput = false;
+    String trackInput = null;
+    while(!validInput){
+      trackInput = inputHandler.getString();
+      if(canConvertToInt(trackInput)){
+        validInput = true;
+      }
+      else{
+        textPrinter.displayInvalidInt();
+      }
     }
-    else{
-      textPrinter.invalidTimeEntry();
-      changeClock();
+    return Integer.parseInt(trackInput);
+  }
+//  public void changeClock(){
+//    textPrinter.displayEnterTime();
+//    LocalTime time = inputHandler.getTimeInput(trainStation.getTime());
+//    if(time != null){
+//      trainStation.changeClock(time);
+//      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+//      System.out.println(time.format(formatter));
+//    }
+//    else{
+//      textPrinter.invalidTimeEntry();
+//      changeClock();
+//    }
+//  }
+
+  public void changeClock(){
+    textPrinter.displayEnterTime(trainStation.getTime());
+    boolean validInput = false;
+    while(!validInput){
+      LocalTime time = inputHandler.getTimeInput(trainStation.getTime());
+      if(time != null){
+        trainStation.changeClock(time);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        System.out.println("Set current time to: " + time.format(formatter));
+        validInput = true;
+      }
+      else{
+        textPrinter.invalidTimeEntry();
+      }
     }
   }
 
