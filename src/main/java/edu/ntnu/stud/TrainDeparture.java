@@ -1,6 +1,5 @@
 package edu.ntnu.stud;
 
-//import java.time.LocalTime;
 /**
  * The {@code TrainDeparture} class represents a TrainDeparture.
  * All {@code TrainDeparture}s have departure time,

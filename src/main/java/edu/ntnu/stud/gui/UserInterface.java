@@ -52,6 +52,9 @@ public class UserInterface {
         case CommandVariables.SET_TIME:
           changeClock();
           break;
+        case CommandVariables.SEARCH:
+          searchMenu();
+          break;
         case CommandVariables.QUIT:
           running = false;
           break;
@@ -60,6 +63,53 @@ public class UserInterface {
           break;
       }
     }
+  }
+
+  public void searchMenu(){
+    boolean searching = true;
+    while(searching){
+      textPrinter.displaySearchCommands();
+      String userCommand = inputHandler.getCommand();
+      switch(userCommand){
+        case(CommandVariables.TRAINNUMBER):
+          TrainDeparture searchedDeparture = searchByNumber();
+          displaySearchedDeparture(searchedDeparture);
+          searching = false;
+          break;
+        case(CommandVariables.DESTINATION):
+          searching = false;
+          break;
+        default:
+          textPrinter.displayInvalidCommand();
+          break;
+      }
+    }
+  }
+
+  public void displaySearchedDeparture(TrainDeparture trainDeparture){
+    if(trainDeparture == null){
+      textPrinter.displayNoMatchingNumber();
+    }
+    else {
+      textPrinter.displayTraindeparture(trainDeparture);
+    }
+  }
+
+  public TrainDeparture searchByNumber() {
+    boolean validInput = false;
+    TrainDeparture trainDeparture = null;
+    textPrinter.displayTrainNumberInput();
+    while(!validInput) {
+      String userInput = inputHandler.getString();
+      if (canConvertToInt(userInput)) {
+        trainDeparture = trainStation.getTrainFromTrainNumber(Integer.parseInt(userInput));
+        validInput = true;
+      }
+      else{
+        textPrinter.displayInvalidInt();
+      }
+    }
+    return trainDeparture;
   }
 
   public void displayTrainDepartures(Iterator<TrainDeparture> trainDepartures, LocalTime currentTime){
@@ -116,7 +166,10 @@ public class UserInterface {
     String trackInput = null;
     while(!validInput){
       trackInput = inputHandler.getString();
-      if(canConvertToInt(trackInput)){
+      if(trackInput.equals("-1")){
+        validInput = true;
+      }
+      else if(canConvertToInt(trackInput)){
         validInput = true;
       }
       else{

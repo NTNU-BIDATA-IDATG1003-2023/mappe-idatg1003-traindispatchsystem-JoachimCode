@@ -14,7 +14,7 @@ public class TrainStation {
 
   public boolean addTrain(TrainDeparture trainDeparture){
     boolean successfullyAdded = false;
-    if(checkTrainNumber(trainDeparture)){
+    if(!checkTrainNumber(trainDeparture.getTrainNumber())){
       trainDepartures.put(trainDeparture.getTrainNumber(), trainDeparture);
       successfullyAdded = true;
     }
@@ -22,7 +22,11 @@ public class TrainStation {
   }
 
   public TrainDeparture getTrainFromTrainNumber(int trainNumber){
-    return trainDepartures.get(trainNumber);
+    TrainDeparture trainDeparture = null;
+    if(checkTrainNumber(trainNumber)){
+      trainDeparture = trainDepartures.get(trainNumber);
+    }
+    return trainDeparture;
   }
 
   public Iterator<TrainDeparture> getTrainFromDestination(String destination){
@@ -58,8 +62,8 @@ public class TrainStation {
    * @param trainDeparture is the object that is being checked.
    * @return boolean if the train number is already in the hashmap.
    */
-  public boolean checkTrainNumber(TrainDeparture trainDeparture){
-    return !trainDepartures.containsKey(trainDeparture.getTrainNumber());
+  public boolean checkTrainNumber(int trainNumber){
+    return trainDepartures.containsKey(trainNumber);
   }
 
 }

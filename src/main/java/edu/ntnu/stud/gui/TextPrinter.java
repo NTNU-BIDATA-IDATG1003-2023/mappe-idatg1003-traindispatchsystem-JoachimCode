@@ -26,7 +26,14 @@ public class TextPrinter {
     System.out.printf("%s - Add a new train departure%n", CommandVariables.ADD);
     System.out.printf("%s - Remove a train departure%n", CommandVariables.REMOVE);
     System.out.printf("%s - Edit a train departure%n", CommandVariables.EDIT);
+    System.out.printf("%s - Search for a train departure%n", CommandVariables.SEARCH);
     System.out.printf("%s - Change the time", CommandVariables.SET_TIME);
+  }
+
+  public void displaySearchCommands(){
+    System.out.println("Commands:");
+    System.out.printf("%s - Search by destination%n", CommandVariables.DESTINATION);
+    System.out.printf("%s - Search by train number%n", CommandVariables.TRAINNUMBER);
   }
 
   public void displayTrainDepartures(Iterator<TrainDeparture> trainDepartures, LocalTime currentTime){
@@ -38,6 +45,10 @@ public class TextPrinter {
         System.out.println(getDepartureInformation(currentTrainDeparture));
       }
     }
+  }
+
+  public void displayTraindeparture(TrainDeparture trainDeparture){
+    System.out.println(getDepartureInformation(trainDeparture));
   }
 
   private String getDepartureInformation(TrainDeparture trainDeparture){
@@ -114,6 +125,11 @@ public class TextPrinter {
     System.out.println("Enter destination: ");
   }
 
+  public void displayEnterTrainNumber(){
+    System.out.println("What is the train number?");
+    System.out.println("Enter train number: ");
+  }
+
   public void displayTrackInput(){
     System.out.println("What track is the train departing from?");
     System.out.println("Type -1 if the track is unknown");
@@ -145,6 +161,11 @@ public class TextPrinter {
   public void displayInvalidTrainNumber(){
     System.err.println("Invalid train number, this train number is already in use");
     System.out.println("Try again!");
+  }
+
+  public void displayNoMatchingNumber(){
+    System.err.println("No matching train number, exiting search");
+    System.out.println("Type /h for more commands");
   }
 
   public void displaySuccessfulAdd(){
