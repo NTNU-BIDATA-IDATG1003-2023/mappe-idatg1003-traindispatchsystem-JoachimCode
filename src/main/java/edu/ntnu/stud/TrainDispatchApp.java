@@ -3,7 +3,8 @@ package edu.ntnu.stud;
 import edu.ntnu.stud.gui.UserInterface;
 
 /**
- * This is the main class for the train dispatch application. It creates instances of train departures and
+ * This is the main class for the train dispatch application.
+ * It creates instances of train departures and
  * uses its info to display the correct data.
  *
  * @author JoachimDuong

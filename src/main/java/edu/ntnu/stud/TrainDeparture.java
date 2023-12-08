@@ -4,7 +4,7 @@ package edu.ntnu.stud;
  * The {@code TrainDeparture} class represents a TrainDeparture.
  * All {@code TrainDeparture}s have departure time,
  * line, train number, destination, track and
- * delay in minutes.
+ * delay.
  *
  * <p>Example:
  *
@@ -14,8 +14,6 @@ package edu.ntnu.stud;
  *
  * <p>The class {@code TrainDeparture} includes methods for accessors and mutators.
  *
- * @author Joachim Duong
- * @version 2.0
  * @since 1.0
  */
 
