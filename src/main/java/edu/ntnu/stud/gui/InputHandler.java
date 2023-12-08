@@ -26,6 +26,15 @@ public class InputHandler {
     return returnTime;
   }
 
+  public LocalTime getTimeInputDelay(LocalTime currentTime){
+    LocalTime returnTime = null;
+    String timeInput = scanner.nextLine();
+    if(timeInput.matches("([01]\\d|2[0-3]):([0-5]\\d)")){
+      returnTime = LocalTime.parse(timeInput);
+    }
+    return returnTime;
+  }
+
 
 }
 

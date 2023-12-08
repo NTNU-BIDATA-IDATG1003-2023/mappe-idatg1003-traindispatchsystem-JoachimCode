@@ -34,7 +34,7 @@ public class TrainStation {
   }
 
   public void removeEarlierDepartures(){
-    trainDepartures.values().removeIf(departure -> (departure.getDepartureTime() + departure.getDelayMinutes()) < timeAsInt(currentTime));
+    trainDepartures.values().removeIf(departure -> (departure.getDepartureTime() + departure.getDelay()) < timeAsInt(currentTime));
   }
 
   public Iterator<TrainDeparture> getSortedDepartureList(){

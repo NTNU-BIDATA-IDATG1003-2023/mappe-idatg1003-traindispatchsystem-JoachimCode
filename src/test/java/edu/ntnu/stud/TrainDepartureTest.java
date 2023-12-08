@@ -150,7 +150,7 @@ class TrainDepartureTest {
    */
   @Test
   void getDelayMinutesPositiveTest() {
-    assertEquals(0, trainDeparture.getDelayMinutes(), "Positive test for getting delay minutes is working.");
+    assertEquals(0, trainDeparture.getDelay(), "Positive test for getting delay minutes is working.");
   }
 
   /*
@@ -160,8 +160,8 @@ class TrainDepartureTest {
    */
   @Test
   void setDelayMinutesPositiveTest() {
-    trainDeparture.setDelayMinutes(10);
-    assertEquals(10, trainDeparture.getDelayMinutes(), "Positive test for setting delay minutes is working.");
+    trainDeparture.setDelay(10);
+    assertEquals(10, trainDeparture.getDelay(), "Positive test for setting delay minutes is working.");
   }
 
   /*
@@ -171,7 +171,7 @@ class TrainDepartureTest {
    */
   @Test
   void setDelayMinutesNegativeTest() {
-    trainDeparture.setDelayMinutes(-10);
-    assertEquals(-1, trainDeparture.getDelayMinutes(), "Negative test for setting delay minutes is working.");
+    trainDeparture.setDelay(-10);
+    assertEquals(-1, trainDeparture.getDelay(), "Negative test for setting delay minutes is working.");
   }
 }
