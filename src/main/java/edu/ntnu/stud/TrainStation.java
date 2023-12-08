@@ -30,7 +30,7 @@ public class TrainStation {
   }
 
   public Iterator<TrainDeparture> getTrainFromDestination(String destination){
-    return trainDepartures.values().stream().filter(departure -> departure.getDestination().equals(destination)).iterator();
+    return trainDepartures.values().stream().filter(departure -> departure.getDestination().equalsIgnoreCase(destination)).iterator();
   }
 
   public void removeEarlierDepartures(){
@@ -43,6 +43,7 @@ public class TrainStation {
 
   public void changeClock(LocalTime newTime){
     currentTime = newTime;
+    removeEarlierDepartures();
   }
 
 

@@ -25,15 +25,27 @@ public class TextPrinter {
     System.out.printf("%s - Displays all the trains departures%n", CommandVariables.DISPLAY);
     System.out.printf("%s - Add a new train departure%n", CommandVariables.ADD);
     System.out.printf("%s - Remove a train departure%n", CommandVariables.REMOVE);
-    System.out.printf("%s - Edit a train departure%n", CommandVariables.EDIT);
+    System.out.printf("%s - assign track/delay to a train departure%n", CommandVariables.EDIT);
     System.out.printf("%s - Search for a train departure%n", CommandVariables.SEARCH);
     System.out.printf("%s - Change the time", CommandVariables.SET_TIME);
   }
 
   public void displaySearchCommands(){
+    System.out.println("Do you want to search by destination or train number?");
     System.out.println("Commands:");
     System.out.printf("%s - Search by destination%n", CommandVariables.DESTINATION);
     System.out.printf("%s - Search by train number%n", CommandVariables.TRAINNUMBER);
+  }
+
+  public void displayEditCommands(){
+    System.out.println("Do you want to assign a track or a delay?");
+    System.out.println("Commands:");
+    System.out.printf("%s - Assign a track%n", CommandVariables.TRACK);
+    System.out.printf("%s - Assign a delay%n", CommandVariables.DELAY);
+  }
+
+  public void enterCommand(){
+    System.out.println("Enter next command: ");
   }
 
   public void displayTrainDepartures(Iterator<TrainDeparture> trainDepartures, LocalTime currentTime){
@@ -41,9 +53,7 @@ public class TextPrinter {
     System.out.println("Train departures:");
     while(trainDepartures.hasNext()){
       TrainDeparture currentTrainDeparture = trainDepartures.next();
-      if(currentTrainDeparture.getActualDepartureTime() >= currentTime.getHour() * 100 + currentTime.getMinute()){
-        System.out.println(getDepartureInformation(currentTrainDeparture));
-      }
+      System.out.println(getDepartureInformation(currentTrainDeparture));
     }
   }
 
@@ -93,6 +103,7 @@ public class TextPrinter {
   public void displayInvalidCommand(){
     System.err.println("Invalid command, type /h for help");
   }
+
 
   public static String strikethroughString(String text) {
     StringBuilder sb = new StringBuilder();
@@ -148,8 +159,13 @@ public class TextPrinter {
     System.out.println("What is the train number?");
     System.out.println("Enter train number: ");
   }
+
+  public void displayRequestDestination(){
+    System.out.println("What destination do you want to search for?");
+    System.out.println("Enter destination: ");
+  }
   public void displayInvalidInt(){
-    System.err.println("Invalid input, please enter a number");
+    System.err.println("Invalid input, please enter a positive number");
     System.out.println("Try again!");
   }
 
@@ -163,8 +179,14 @@ public class TextPrinter {
     System.out.println("Try again!");
   }
 
+  public void displayNoMatchingDestination(){
+    System.err.println("No matching destination, exiting search");
+    System.err.flush();
+    System.out.println("Type /h for more commands");
+  }
   public void displayNoMatchingNumber(){
     System.err.println("No matching train number, exiting search");
+    System.err.flush();
     System.out.println("Type /h for more commands");
   }
 
@@ -173,6 +195,11 @@ public class TextPrinter {
   }
   public void invalidTimeEntry(){
     System.err.println("Invalid time entry, make sure you use the format HH:MM and that the time is after the current time ");
+    System.err.flush();
     System.out.println("Try again!");
+  }
+
+  public void displaySuccessfulEdit(){
+    System.out.println("Successfully edited train departure");
   }
 }

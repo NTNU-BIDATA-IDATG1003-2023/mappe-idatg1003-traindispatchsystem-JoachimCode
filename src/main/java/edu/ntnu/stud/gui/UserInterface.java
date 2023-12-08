@@ -48,6 +48,7 @@ public class UserInterface {
         case CommandVariables.REMOVE:
           break;
         case CommandVariables.EDIT:
+          editMenu();
           break;
         case CommandVariables.SET_TIME:
           changeClock();
@@ -68,15 +69,17 @@ public class UserInterface {
   public void searchMenu(){
     boolean searching = true;
     while(searching){
-      textPrinter.displaySearchCommands();
+      textPrinter.displayEditCommands();
       String userCommand = inputHandler.getCommand();
       switch(userCommand){
-        case(CommandVariables.TRAINNUMBER):
+        case(CommandVariables.DELAY):
           TrainDeparture searchedDeparture = searchByNumber();
-          displaySearchedDeparture(searchedDeparture);
+          displaySearchedNumber(searchedDeparture);
           searching = false;
           break;
-        case(CommandVariables.DESTINATION):
+        case(CommandVariables.TRACK):
+          Iterator<TrainDeparture> searchedDepartures = searchByDestination();
+          displaySearchedDestination(searchedDepartures);
           searching = false;
           break;
         default:
@@ -86,7 +89,55 @@ public class UserInterface {
     }
   }
 
-  public void displaySearchedDeparture(TrainDeparture trainDeparture){
+  public void editMenu(){
+    boolean searching = true;
+    while(searching){
+      textPrinter.displayEditCommands();
+      String userCommand = inputHandler.getCommand();
+      switch(userCommand){
+        case(CommandVariables.DELAY):
+          TrainDeparture searchedDepartureDelay = searchByNumber();
+          displaySearchedNumber(searchedDepartureDelay);
+          editDelay(searchedDepartureDelay);
+          searching = false;
+          break;
+        case(CommandVariables.TRACK):
+          TrainDeparture searchedDepartureTrack = searchByNumber();
+          displaySearchedNumber(searchedDepartureTrack);
+          editTrack(searchedDepartureTrack);
+          searching = false;
+          break;
+        default:
+          textPrinter.displayInvalidCommand();
+          break;
+      }
+    }
+  }
+
+  public void editDelay(TrainDeparture trainDeparture) {
+    trainDeparture.setDelayMinutes(getDepartureDelay(trainDeparture.getDepartureTime()));
+    textPrinter.displaySuccessfulEdit();
+    textPrinter.enterCommand();
+  }
+
+  public void editTrack(TrainDeparture trainDeparture) {
+    trainDeparture.setTrack(getDepartureTrack());
+    textPrinter.displaySuccessfulEdit();
+    textPrinter.enterCommand();
+  }
+  public void displaySearchedDestination(Iterator<TrainDeparture> trainDepartures){
+    if(trainDepartures.hasNext()){
+      while(trainDepartures.hasNext()){
+        TrainDeparture currentTrainDeparture = trainDepartures.next();
+        textPrinter.displayTraindeparture(currentTrainDeparture);
+      }
+      textPrinter.enterCommand();
+    }
+    else{
+      textPrinter.displayNoMatchingDestination();
+    }
+  }
+  public void displaySearchedNumber(TrainDeparture trainDeparture){
     if(trainDeparture == null){
       textPrinter.displayNoMatchingNumber();
     }
@@ -95,6 +146,11 @@ public class UserInterface {
     }
   }
 
+  public Iterator<TrainDeparture> searchByDestination() {
+    textPrinter.displayRequestDestination();
+    String userInput = inputHandler.getString();
+    return trainStation.getTrainFromDestination(userInput);
+  }
   public TrainDeparture searchByNumber() {
     boolean validInput = false;
     TrainDeparture trainDeparture = null;
@@ -169,7 +225,7 @@ public class UserInterface {
       if(trackInput.equals("-1")){
         validInput = true;
       }
-      else if(canConvertToInt(trackInput)){
+      else if(canConvertToInt(trackInput) && Integer.parseInt(trackInput) > 0){
         validInput = true;
       }
       else{
@@ -185,7 +241,7 @@ public class UserInterface {
     String delayInput = null;
     while(!validInput){
       delayInput = inputHandler.getString();
-      if(!canConvertToInt(delayInput)){
+      if(!canConvertToInt(delayInput) || Integer.parseInt(delayInput) < 0){
         textPrinter.displayInvalidInt();
       }
       else if(addDelay(departureTime, Integer.parseInt(delayInput)) == -1){

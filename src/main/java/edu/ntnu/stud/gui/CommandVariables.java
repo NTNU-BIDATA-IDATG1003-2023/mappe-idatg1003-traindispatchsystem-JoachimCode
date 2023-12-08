@@ -11,4 +11,6 @@ public class CommandVariables {
   public static final String QUIT = "/quit";
   public static final String DESTINATION = "/destination";
   public static final String TRAINNUMBER = "/trainnumber";
+  public static final String DELAY = "/delay";
+  public static final String TRACK = "/track";
 }
