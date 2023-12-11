@@ -10,8 +10,8 @@ import edu.ntnu.stud.ui.UserInterface;
  * uses its info to display the correct data.
  *
  * @author Joachim Duong
- * @version 1.0
- * @since 0.0.1
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class TrainDispatchApp {
   TrainStation trainStation;

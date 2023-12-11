@@ -48,7 +48,7 @@ class ValidatorTest {
 
   @Test
   void checkAvailableTrackNegative() {
-    assertFalse(validator.checkAvailableTrack(1337, 2, trainStation.getSortedDepartureList()), "Negative test for checkAvailableTrack is working.");
+    assertFalse(validator.checkAvailableTrack(1357, 2, trainStation.getSortedDepartureList()), "Negative test for checkAvailableTrack is working.");
   }
 
   @Test
@@ -58,6 +58,6 @@ class ValidatorTest {
 
   @Test
   void checkAvailableLineNegative() {
-    assertFalse(validator.checkAvailableLine(1337, "B", trainStation.getSortedDepartureList()), "Negative test for checkAvailableLine is working.");
+    assertFalse(validator.checkAvailableLine(1357, "B", trainStation.getSortedDepartureList()), "Negative test for checkAvailableLine is working.");
   }
 }

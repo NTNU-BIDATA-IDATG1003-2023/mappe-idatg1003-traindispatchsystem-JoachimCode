@@ -209,7 +209,7 @@ public class UserInterface {
     TrainDeparture searchedDepartureTrack = searchByNumberInput();
     if (searchedDepartureTrack != null) {
       displaySearchedNumber(searchedDepartureTrack);
-      searchedDepartureTrack.setTrack(getValidDepartureTimeInput(
+      searchedDepartureTrack.setTrack(getValidTrackInput(
               searchedDepartureTrack.getDepartureTime()));
       textPrinter.displaySuccessfulEdit();
       textPrinter.enterCommand();
@@ -311,10 +311,10 @@ public class UserInterface {
    * train departure and display a successful add message.
    */
   private void addTrain() {
-    int departureTime = getValidDepartureInput();
+    int departureTime = getValidDepartureTimeInput();
     String departureLine = getValidDepartureLineInput(departureTime);
     String departureDestination = getDepartureDestinationInput();
-    int departureTrack = getValidDepartureTimeInput(departureTime);
+    int departureTrack = getValidTrackInput(departureTime);
     int delay = getValidDepartureDelayInput(departureTime);
     boolean successfullyAdded = false;
     while (!successfullyAdded) {
@@ -339,7 +339,7 @@ public class UserInterface {
    *
    * @return the departure time of the train departure as an int.
    */
-  private int getValidDepartureInput() {
+  private int getValidDepartureTimeInput() {
     textPrinter.displayDepartureTimeInput();
     boolean validInput = false;
     LocalTime timeInput = null;
@@ -390,43 +390,56 @@ public class UserInterface {
   }
 
   /**
-   * Gets the track of the train departure from user input as a String.
+   * Returns the track the user wants to set
    * It runs until the user enters a valid track
-   * It first checks if the track is available, and if it is not, it will display an error message
-   * It then checks if the user enters -1, which means that the track is unknown,
+   * It checks if the user enters -1, which means that the track is unknown,
    * and makes it a valid input.
-   * In the end it checks if the user enters a positive number,
-   * and if it is, it will return the track as an int.
+   * Then it checks if it is an valid int, if not display an error message.
+   * If it is an valid int, it checks if the track is busy on that
+   * timeslot, if not, it sends an error message,
    *
    * @param time is the departure time of the train departure.
    * @return the track of the train departure as an int.
    */
-  private int getValidDepartureTimeInput(int time) {
+  private int getValidTrackInput(int time) {
     textPrinter.displayTrackInput();
-    boolean validTrack = false;
-    boolean validInt = false;
-    String trackInput = null;
-    while (!validInt || !validTrack) {
-      trackInput = inputHandler.getString();
-      if (validator.checkAvailableTrack(time, Integer.parseInt(trackInput),
-              trainStation.getSortedDepartureList())) {
-        validTrack = true;
-      } else {
-        textPrinter.displayInvalidTrack();
-        validTrack = false;
-      }
+    int trackNumber = -1;
+    boolean validTrackNumber = false;
+    while (!validTrackNumber) {
+      String trackInput = inputHandler.getString();
       if (trackInput.equals("-1")) {
-        validInt = true;
-        validTrack = true;
-      } else if (validator.canConvertToInt(trackInput) && Integer.parseInt(trackInput) > 0) {
-        validInt = true;
+        validTrackNumber = true;
+      } else if (validator.canConvertToInt(trackInput)) {
+        int parsedTrackInput = Integer.parseInt(trackInput);
+        if (parsedTrackInput > 0 && isValidTrack(time, parsedTrackInput)) {
+          trackNumber = parsedTrackInput;
+          validTrackNumber = true;
+        }
       } else {
         textPrinter.displayInvalidInt();
       }
     }
-    return Integer.parseInt(trackInput);
+    return trackNumber;
   }
 
+  /**
+   * This method checks if the track is available at the given time,
+   * because there can only be one train at a track at a time.
+   * If not it will display an error message.
+   *
+   * @param time is the time that is being checked.
+   * @param trackNumber is the track that is being checked.
+   * @return boolean if the track is available at the given time.
+   */
+  private boolean isValidTrack(int time, int trackNumber) {
+    boolean validTrack = false;
+    if (validator.checkAvailableTrack(time, trackNumber, trainStation.getSortedDepartureList())) {
+      validTrack = true;
+    } else {
+      textPrinter.displayInvalidTrack();
+    }
+    return validTrack;
+  }
   /**
    * Gets the delay of the train departure from user input.
    * It runs until the user enters a valid delay.
@@ -439,6 +452,7 @@ public class UserInterface {
    * @param departureTime is the departure time of the train departure.
    * @return the delay of the train departure as an int.
    */
+
   private int getValidDepartureDelayInput(int departureTime) {
     textPrinter.displayDelayInput();
     boolean validInput = false;
@@ -448,7 +462,7 @@ public class UserInterface {
       time = inputHandler.getTimeInput();
       if (time == null) {
         textPrinter.invalidDelayEntry();
-      } else if (addDelay(departureTime, getTimeAsInt(time)) == -1) {
+      } else if (validator.addDelay(departureTime, getTimeAsInt(time)) == -1) {
         textPrinter.displayInvalidDelay();
       } else {
         delayInput = getTimeAsInt(time);
@@ -503,46 +517,6 @@ public class UserInterface {
         textPrinter.invalidTimeEntry();
       }
     }
-  }
-
-  /**
-   * This method adds a delay to the departure time. It is used to check
-   * what the time is after the delay and if it reaches the next day.
-   * It first extracts the hours and minutes from the departure time and delay time.
-   * It then adds the delay to the minutes and hours.
-   * It then checks if the minutes exceed 60, and if it does, it will add correctly to the hours
-   * and get the remaining minutes after rollover.
-   * It then checks if the hours exceed 24, and if it does, it will return -1 because it
-   * should not be able to go to the next day.
-   * In the end it combines the hours and minutes to get the new time in the format HHMM
-   * and returns the new time as an int.
-   *
-   * @param departureTime is the departure time of the train departure.
-   * @param delayTime is the delay of the train departure.
-   * @return the new time as an int and -1 if it exceeds 24:00.
-   */
-  private int addDelay(int departureTime, int delayTime) {
-    int actualDepartureTime;
-    int hours = departureTime / 100;
-    int minutes = departureTime % 100;
-
-    int delayMinutes = delayTime % 100;
-    int delayHours = delayTime / 100;
-
-    minutes += delayMinutes;
-    hours += delayHours;
-
-    if (minutes >= 60) {
-      hours += minutes / 60;
-      minutes %= 60;
-    }
-
-    if (hours < 24) {
-      actualDepartureTime = hours * 100 + minutes;
-    } else {
-      actualDepartureTime = -1;
-    }
-    return actualDepartureTime;
   }
 
   /**

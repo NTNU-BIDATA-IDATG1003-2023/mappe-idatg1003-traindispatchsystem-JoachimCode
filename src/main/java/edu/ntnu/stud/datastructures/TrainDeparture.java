@@ -16,7 +16,7 @@ package edu.ntnu.stud.datastructures;
  *
  * @author Joachim Duong
  * @version 1.0.0
- * @since 1.0
+ * @since 1.0.0
  */
 
 public class TrainDeparture {
