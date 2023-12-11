@@ -62,7 +62,7 @@ public class TrainStation {
    */
   public boolean addTrain(TrainDeparture trainDeparture) {
     boolean successfullyAdded = false;
-    if (!checkTrainNumber(trainDeparture.getTrainNumber())) {
+    if (!checkTrainNumberInRegister(trainDeparture.getTrainNumber())) {
       trainDepartures.put(trainDeparture.getTrainNumber(), trainDeparture);
       successfullyAdded = true;
     }
@@ -78,7 +78,7 @@ public class TrainStation {
    */
   public TrainDeparture getTrainFromTrainNumber(int trainNumber) {
     TrainDeparture trainDeparture = null;
-    if (checkTrainNumber(trainNumber)) {
+    if (checkTrainNumberInRegister(trainNumber)) {
       trainDeparture = trainDepartures.get(trainNumber);
     }
     return trainDeparture;
@@ -157,7 +157,7 @@ public class TrainStation {
    * @param trainNumber is the train number that is being checked.
    * @return boolean if the train number is in the hashmap.
    */
-  public boolean checkTrainNumber(int trainNumber) {
+  public boolean checkTrainNumberInRegister(int trainNumber) {
     return trainDepartures.containsKey(trainNumber);
   }
 

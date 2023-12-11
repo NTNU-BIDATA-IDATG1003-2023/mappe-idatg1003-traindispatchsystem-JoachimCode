@@ -120,8 +120,7 @@ public class UserInterface {
       String userCommand = inputHandler.getString();
       switch (userCommand) {
         case (CommandVariables.TRAIN_NUMBER) -> {
-          TrainDeparture searchedDeparture = searchByNumberInput();
-          displaySearchedNumber(searchedDeparture);
+          searchTrainNumber();
           searching = false;
         }
         case (CommandVariables.DESTINATION) -> {
@@ -131,6 +130,22 @@ public class UserInterface {
         }
         default -> textPrinter.displayInvalidCommand();
       }
+    }
+  }
+
+  /*
+  * This is a method to display a train departure
+  * from the train number. If the train number is not
+  * in the register, it will be null and display an error message.
+  * else it will call the displaySearchedNumber method and display the
+  * departure.
+   */
+  private void searchTrainNumber() {
+    TrainDeparture searchedDepartureTrack = searchByNumberInput();
+    if (searchedDepartureTrack != null) {
+      displaySearchedNumber(searchedDepartureTrack);
+    } else {
+      textPrinter.displayNoMatchingNumber();
     }
   }
 
@@ -155,15 +170,11 @@ public class UserInterface {
       String userCommand = inputHandler.getString();
       switch (userCommand) {
         case (CommandVariables.DELAY) -> {
-          TrainDeparture searchedDepartureDelay = searchByNumberInput();
-          displaySearchedNumber(searchedDepartureDelay);
-          editDelay(searchedDepartureDelay);
+          editDelay();
           searching = false;
         }
         case (CommandVariables.TRACK) -> {
-          TrainDeparture searchedDepartureTrack = searchByNumberInput();
-          displaySearchedNumber(searchedDepartureTrack);
-          editTrack(searchedDepartureTrack);
+          editTrack();
           searching = false;
         }
         default -> textPrinter.displayInvalidCommand();
@@ -173,30 +184,39 @@ public class UserInterface {
 
   /**
    * Edits the delay of a train departure.
-   * It uses the getDepartureDelay method to get the new delay,
-   * and then sets the delay of the train departure.
-   * In the end it displays a successful edit message.
-   *
-   * @param trainDeparture is the train departure that is being edited.
+   * It searches for a train departure and if it is not null
+   * it will set the delay of the train-departure as input.
    */
-  private void editDelay(TrainDeparture trainDeparture) {
-    trainDeparture.setDelay(getValidDepartureDelayInput(trainDeparture.getDepartureTime()));
-    textPrinter.displaySuccessfulEdit();
-    textPrinter.enterCommand();
+  private void editDelay() {
+    TrainDeparture searchedDepartureDelay = searchByNumberInput();
+    if (searchedDepartureDelay != null) {
+      displaySearchedNumber(searchedDepartureDelay);
+      searchedDepartureDelay.setDelay(getValidDepartureDelayInput(
+              searchedDepartureDelay.getDepartureTime()));
+      textPrinter.displaySuccessfulEdit();
+      textPrinter.enterCommand();
+    } else {
+      textPrinter.displayNoMatchingNumber();
+    }
   }
 
   /**
    * Edits the track of a train departure.
-   * It uses the getDepartureTrack method to get the track,
-   * and then sets the track of the train departure.
-   * In the end it displays a successful edit message.
-   *
-   * @param trainDeparture is the train departure that is being edited.
+   * It searches for a train departure and if it is not null
+   * it will set the track of the train-departure as input.
    */
-  private void editTrack(TrainDeparture trainDeparture) {
-    trainDeparture.setTrack(getValidDepartureTimeInput(trainDeparture.getDepartureTime()));
-    textPrinter.displaySuccessfulEdit();
-    textPrinter.enterCommand();
+  private void editTrack() {
+    TrainDeparture searchedDepartureTrack = searchByNumberInput();
+    if (searchedDepartureTrack != null) {
+      displaySearchedNumber(searchedDepartureTrack);
+      searchedDepartureTrack.setTrack(getValidDepartureTimeInput(
+              searchedDepartureTrack.getDepartureTime()));
+      textPrinter.displaySuccessfulEdit();
+      textPrinter.enterCommand();
+    } else {
+      textPrinter.displayNoMatchingNumber();
+    }
+
   }
 
   /**
@@ -228,11 +248,7 @@ public class UserInterface {
    * @param trainDeparture is the train departure that is being displayed.
    */
   public void displaySearchedNumber(TrainDeparture trainDeparture) {
-    if (trainDeparture == null) {
-      textPrinter.displayNoMatchingNumber();
-    } else {
-      textPrinter.displayTrainDeparture(trainDeparture);
-    }
+    textPrinter.displayTrainDeparture(trainDeparture);
   }
 
   /**
@@ -329,7 +345,7 @@ public class UserInterface {
     LocalTime timeInput = null;
     while (!validInput) {
       timeInput = inputHandler.getTimeInput();
-      if (timeInput != null && timeInput.isAfter(trainStation.getTime())){
+      if (timeInput != null && timeInput.isAfter(trainStation.getTime())) {
         validInput = true;
       } else {
         textPrinter.invalidTimeEntry();
@@ -546,11 +562,12 @@ public class UserInterface {
 
   /**
    * This method sets the trainStation of the userInterface.
-   * @throws IllegalArgumentException if the trainStation is null.
+   *
    * @param trainStation is the trainStation that the userInterface will use.
+   * @throws IllegalArgumentException if the trainStation is null.
    */
   private void setTrainStation(TrainStation trainStation) {
-    if(trainStation == null){
+    if (trainStation == null) {
       throw new IllegalArgumentException("TrainStation cannot be null");
     } else {
       this.trainStation = trainStation;
@@ -560,7 +577,7 @@ public class UserInterface {
   /**
    * This method ends the program by setting running to false and displaying an end message.
    */
-  private void endProgram(){
+  private void endProgram() {
     running = false;
     textPrinter.displayEndMessage();
   }

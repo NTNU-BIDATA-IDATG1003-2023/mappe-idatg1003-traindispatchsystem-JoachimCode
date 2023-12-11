@@ -134,6 +134,6 @@ class TrainStationTest {
      */
     @Test
     void checkTrainNumber() {
-        assertTrue(trainStation.checkTrainNumber(123), "Test for checkTrainNumber is working.");
+        assertTrue(trainStation.checkTrainNumberInRegister(123), "Test for checkTrainNumber is working.");
     }
 }
