@@ -11,7 +11,6 @@ package edu.ntnu.stud.gui;
  */
 public class CommandVariables {
   private CommandVariables(){
-
   }
   public static final String HELP = "/h";
   public static final String DISPLAY = "/display";
@@ -21,7 +20,7 @@ public class CommandVariables {
   public static final String SET_TIME = "/settime";
   public static final String QUIT = "/quit";
   public static final String DESTINATION = "/destination";
-  public static final String TRAINNUMBER = "/trainnumber";
+  public static final String TRAIN_NUMBER = "/trainnumber";
   public static final String DELAY = "/delay";
   public static final String TRACK = "/track";
 }

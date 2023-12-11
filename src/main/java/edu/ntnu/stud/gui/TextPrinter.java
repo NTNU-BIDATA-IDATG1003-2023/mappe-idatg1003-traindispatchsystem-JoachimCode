@@ -1,6 +1,6 @@
 package edu.ntnu.stud.gui;
 
-import edu.ntnu.stud.TrainDeparture;
+import edu.ntnu.stud.dataStructures.TrainDeparture;
 import java.time.LocalTime;
 import java.util.Iterator;
 
@@ -51,7 +51,7 @@ public class TextPrinter {
     System.out.println("Do you want to search by destination or train number?");
     printCommands();
     System.out.printf("%s - Search by destination%n", CommandVariables.DESTINATION);
-    System.out.printf("%s - Search by train number%n", CommandVariables.TRAINNUMBER);
+    System.out.printf("%s - Search by train number%n", CommandVariables.TRAIN_NUMBER);
   }
 
   /**
@@ -249,7 +249,7 @@ public class TextPrinter {
    */
   public void displayDelayInput() {
     System.out.println("Is there a delay to the train?");
-    System.out.println("Type 0 if there is no delay");
+    System.out.println("Type 00:00 if there is no delay");
     System.out.println("If there is enter the delay in format HH:MM");
     System.out.println("Enter delay: ");
   }

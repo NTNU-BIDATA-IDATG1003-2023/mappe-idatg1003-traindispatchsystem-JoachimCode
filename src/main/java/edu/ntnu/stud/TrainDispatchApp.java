@@ -1,5 +1,7 @@
 package edu.ntnu.stud;
 
+import edu.ntnu.stud.dataStructures.TrainDeparture;
+import edu.ntnu.stud.dataStructures.TrainStation;
 import edu.ntnu.stud.gui.UserInterface;
 
 /**

@@ -1,4 +1,4 @@
-package edu.ntnu.stud;
+package edu.ntnu.stud.dataStructures;
 
 /**
  * The {@code TrainDeparture} class represents a TrainDeparture.

@@ -1,7 +1,7 @@
 package edu.ntnu.stud.gui;
 
-import edu.ntnu.stud.TrainDeparture;
-import edu.ntnu.stud.TrainStation;
+import edu.ntnu.stud.dataStructures.TrainDeparture;
+import edu.ntnu.stud.dataStructures.TrainStation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

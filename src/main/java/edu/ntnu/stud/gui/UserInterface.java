@@ -1,7 +1,7 @@
 package edu.ntnu.stud.gui;
 
-import edu.ntnu.stud.TrainDeparture;
-import edu.ntnu.stud.TrainStation;
+import edu.ntnu.stud.dataStructures.TrainDeparture;
+import edu.ntnu.stud.dataStructures.TrainStation;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
@@ -119,7 +119,7 @@ public class UserInterface {
       textPrinter.displaySearchCommands();
       String userCommand = inputHandler.getString();
       switch (userCommand) {
-        case (CommandVariables.TRAINNUMBER) -> {
+        case (CommandVariables.TRAIN_NUMBER) -> {
           TrainDeparture searchedDeparture = searchByNumber();
           displaySearchedNumber(searchedDeparture);
           searching = false;

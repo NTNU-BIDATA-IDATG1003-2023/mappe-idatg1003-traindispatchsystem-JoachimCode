@@ -1,6 +1,6 @@
 package edu.ntnu.stud.gui;
 
-import edu.ntnu.stud.TrainDeparture;
+import edu.ntnu.stud.dataStructures.TrainDeparture;
 import java.util.Iterator;
 
 /**

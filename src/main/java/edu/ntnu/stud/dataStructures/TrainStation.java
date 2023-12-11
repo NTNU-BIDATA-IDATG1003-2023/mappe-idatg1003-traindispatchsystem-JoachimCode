@@ -1,4 +1,4 @@
-package edu.ntnu.stud;
+package edu.ntnu.stud.dataStructures;
 
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class TrainStation {
    * to be in a sorted order.
    * The key is the train number, and the value is the train departure.
    */
-  private HashMap<Integer, TrainDeparture> trainDepartures;
+  private final HashMap<Integer, TrainDeparture> trainDepartures;
 
   /**
    * This is the constructor for the TrainStation class.
