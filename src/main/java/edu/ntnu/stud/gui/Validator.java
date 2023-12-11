@@ -22,7 +22,7 @@ public class Validator {
    */
   public boolean canConvertToInt(String str) {
     boolean canConvert = str != null && !str.isEmpty();
-    if(canConvert) {
+    if (canConvert) {
       for (int i = 0; i < str.length(); i++) {
         if (!Character.isDigit(str.charAt(i))) {
           canConvert = false;

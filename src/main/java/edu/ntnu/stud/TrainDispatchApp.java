@@ -16,18 +16,20 @@ import edu.ntnu.stud.gui.UserInterface;
 public class TrainDispatchApp {
   TrainStation trainStation;
   UserInterface userInterface;
-  public static void main(String[] args){
+
+  public static void main(String[] args) {
     TrainDispatchApp trainDispatchApp = new TrainDispatchApp();
     trainDispatchApp.start();
   }
-  private void start(){
+
+  private void start() {
     trainStation = new TrainStation();
     innit();
     userInterface = new UserInterface(trainStation);
     userInterface.initialize();
   }
 
-  private void innit(){
+  private void innit() {
     trainStation.addTrain(new TrainDeparture(1224, "A", 2, "Oslo", -1, 0));
     trainStation.addTrain(new TrainDeparture(1337, "B", 1, "Trondheim", 2, 20));
     trainStation.addTrain(new TrainDeparture(1400, "C", 3, "Bergen", 3, 0));

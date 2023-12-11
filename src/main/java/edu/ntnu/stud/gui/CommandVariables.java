@@ -10,8 +10,9 @@ package edu.ntnu.stud.gui;
  * @since 1.0.0
  */
 public class CommandVariables {
-  private CommandVariables(){
+  private CommandVariables() {
   }
+
   public static final String HELP = "/h";
   public static final String DISPLAY = "/display";
   public static final String ADD = "/add";

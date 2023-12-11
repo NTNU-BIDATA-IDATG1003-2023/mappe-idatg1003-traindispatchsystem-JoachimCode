@@ -12,7 +12,8 @@ package edu.ntnu.stud.datastructures;
  *     TrainDeparture trainDeparture = new trainDeparture(PARAMETERS);
  * </pre></blockquote>
  *
- * <p>The class {@code TrainDeparture} includes methods for accessors and mutators.
+ * <p>The class {@code TrainDeparture} includes methods for accessors and mutators.'
+ *
  * @author Joachim Duong
  * @version 1.0.0
  * @since 1.0

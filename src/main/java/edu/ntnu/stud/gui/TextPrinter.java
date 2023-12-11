@@ -87,7 +87,7 @@ public class TextPrinter {
     System.out.println("Train departure table");
     System.out.println("current time: " + currentTime);
     System.out.println("Train departures:");
-    if (!trainDepartures.hasNext()){
+    if (!trainDepartures.hasNext()) {
       System.out.println("No train departures");
     }
     while (trainDepartures.hasNext()) {
@@ -360,14 +360,16 @@ public class TextPrinter {
   * This is a private method that prints the commands message, because
   * it is required many times.
   */
-  private void printCommands(){
+
+  private void printCommands() {
     System.out.println("Commands:");
   }
   /*
   * This is a private method that prints the try again message, because
   * it is required many times.
    */
-  private void printTryAgain(){
+
+  private void printTryAgain() {
     System.out.println("Try again!");
   }
 
