@@ -1,4 +1,4 @@
-package edu.ntnu.stud.gui;
+package edu.ntnu.stud.ui;
 
 import java.time.LocalTime;
 import java.util.Scanner;

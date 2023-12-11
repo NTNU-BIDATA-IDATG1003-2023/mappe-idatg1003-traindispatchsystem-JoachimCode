@@ -1,4 +1,4 @@
-package edu.ntnu.stud.gui;
+package edu.ntnu.stud.ui;
 
 /**
  * The {@code CommandVariables} class contains all the commands that the user can use.

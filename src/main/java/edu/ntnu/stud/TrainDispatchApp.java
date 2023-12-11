@@ -2,7 +2,7 @@ package edu.ntnu.stud;
 
 import edu.ntnu.stud.datastructures.TrainDeparture;
 import edu.ntnu.stud.datastructures.TrainStation;
-import edu.ntnu.stud.gui.UserInterface;
+import edu.ntnu.stud.ui.UserInterface;
 
 /**
  * This is the main class for the train dispatch application.

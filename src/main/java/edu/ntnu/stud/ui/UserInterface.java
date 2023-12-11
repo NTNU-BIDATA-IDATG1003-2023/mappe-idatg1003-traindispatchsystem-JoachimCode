@@ -1,4 +1,4 @@
-package edu.ntnu.stud.gui;
+package edu.ntnu.stud.ui;
 
 import edu.ntnu.stud.datastructures.TrainDeparture;
 import edu.ntnu.stud.datastructures.TrainStation;
