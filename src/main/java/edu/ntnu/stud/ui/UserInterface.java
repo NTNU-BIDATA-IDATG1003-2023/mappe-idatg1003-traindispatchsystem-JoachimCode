@@ -141,7 +141,7 @@ public class UserInterface {
   * departure.
    */
   private void searchTrainNumber() {
-    TrainDeparture searchedDepartureTrack = searchByNumberInput();
+    TrainDeparture searchedDepartureTrack = searchByTrainNumberInput();
     if (searchedDepartureTrack != null) {
       displaySearchedNumber(searchedDepartureTrack);
     } else {
@@ -188,7 +188,7 @@ public class UserInterface {
    * it will set the delay of the train-departure as input.
    */
   private void editDelay() {
-    TrainDeparture searchedDepartureDelay = searchByNumberInput();
+    TrainDeparture searchedDepartureDelay = searchByTrainNumberInput();
     if (searchedDepartureDelay != null) {
       displaySearchedNumber(searchedDepartureDelay);
       searchedDepartureDelay.setDelay(getValidDepartureDelayInput(
@@ -206,7 +206,7 @@ public class UserInterface {
    * it will set the track of the train-departure as input.
    */
   private void editTrack() {
-    TrainDeparture searchedDepartureTrack = searchByNumberInput();
+    TrainDeparture searchedDepartureTrack = searchByTrainNumberInput();
     if (searchedDepartureTrack != null) {
       displaySearchedNumber(searchedDepartureTrack);
       searchedDepartureTrack.setTrack(getValidTrackInput(
@@ -273,7 +273,7 @@ public class UserInterface {
    *
    * @return TrainDeparture if the train number is in the hashmap, else null.
    */
-  private TrainDeparture searchByNumberInput() {
+  private TrainDeparture searchByTrainNumberInput() {
     boolean validInput = false;
     TrainDeparture trainDeparture = null;
     textPrinter.displayTrainNumberInput();
