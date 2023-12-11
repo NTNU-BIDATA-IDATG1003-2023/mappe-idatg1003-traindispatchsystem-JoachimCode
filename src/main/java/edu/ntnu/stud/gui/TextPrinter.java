@@ -1,6 +1,6 @@
 package edu.ntnu.stud.gui;
 
-import edu.ntnu.stud.dataStructures.TrainDeparture;
+import edu.ntnu.stud.datastructures.TrainDeparture;
 import java.time.LocalTime;
 import java.util.Iterator;
 
@@ -41,6 +41,7 @@ public class TextPrinter {
     System.out.printf("%s - assign track/delay to a train departure%n", CommandVariables.EDIT);
     System.out.printf("%s - Search for a train departure%n", CommandVariables.SEARCH);
     System.out.printf("%s - Change the time%n", CommandVariables.SET_TIME);
+    System.out.printf("%s - Quit the program%n", CommandVariables.QUIT);
   }
 
   /**
@@ -86,6 +87,9 @@ public class TextPrinter {
     System.out.println("Train departure table");
     System.out.println("current time: " + currentTime);
     System.out.println("Train departures:");
+    if (!trainDepartures.hasNext()){
+      System.out.println("No train departures");
+    }
     while (trainDepartures.hasNext()) {
       TrainDeparture currentTrainDeparture = trainDepartures.next();
       System.out.println(getDepartureInformation(currentTrainDeparture));
@@ -182,7 +186,7 @@ public class TextPrinter {
   public static String strikethroughString(String text) {
     StringBuilder sb = new StringBuilder();
     for (char c : text.toCharArray()) {
-      sb.append(c).append('\u0336'); // Using an ASCII character for strikethrough effect
+      sb.append(c).append('̶'); // Using an ASCII character for strikethrough effect
     }
     return sb.toString();
   }

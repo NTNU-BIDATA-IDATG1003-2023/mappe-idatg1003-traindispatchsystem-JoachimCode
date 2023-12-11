@@ -1,7 +1,7 @@
 package edu.ntnu.stud.gui;
 
-import edu.ntnu.stud.dataStructures.TrainDeparture;
-import edu.ntnu.stud.dataStructures.TrainStation;
+import edu.ntnu.stud.datastructures.TrainDeparture;
+import edu.ntnu.stud.datastructures.TrainStation;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
@@ -84,7 +84,7 @@ public class UserInterface {
    * it will display an error message and ask for a new command. It uses the constant variables
    * in the CommandVariables class to determine what to do.
    */
-  public void menuSelect() {
+  private void menuSelect() {
     while (running) {
       String userCommand = inputHandler.getString();
       switch (userCommand) {
@@ -120,12 +120,12 @@ public class UserInterface {
       String userCommand = inputHandler.getString();
       switch (userCommand) {
         case (CommandVariables.TRAIN_NUMBER) -> {
-          TrainDeparture searchedDeparture = searchByNumber();
+          TrainDeparture searchedDeparture = searchByNumberInput();
           displaySearchedNumber(searchedDeparture);
           searching = false;
         }
         case (CommandVariables.DESTINATION) -> {
-          Iterator<TrainDeparture> searchedDepartures = searchByDestination();
+          Iterator<TrainDeparture> searchedDepartures = searchByDestinationInput();
           displaySearchedDestination(searchedDepartures);
           searching = false;
         }
@@ -155,13 +155,13 @@ public class UserInterface {
       String userCommand = inputHandler.getString();
       switch (userCommand) {
         case (CommandVariables.DELAY) -> {
-          TrainDeparture searchedDepartureDelay = searchByNumber();
+          TrainDeparture searchedDepartureDelay = searchByNumberInput();
           displaySearchedNumber(searchedDepartureDelay);
           editDelay(searchedDepartureDelay);
           searching = false;
         }
         case (CommandVariables.TRACK) -> {
-          TrainDeparture searchedDepartureTrack = searchByNumber();
+          TrainDeparture searchedDepartureTrack = searchByNumberInput();
           displaySearchedNumber(searchedDepartureTrack);
           editTrack(searchedDepartureTrack);
           searching = false;
@@ -179,8 +179,8 @@ public class UserInterface {
    *
    * @param trainDeparture is the train departure that is being edited.
    */
-  public void editDelay(TrainDeparture trainDeparture) {
-    trainDeparture.setDelay(getDepartureDelay(trainDeparture.getDepartureTime()));
+  private void editDelay(TrainDeparture trainDeparture) {
+    trainDeparture.setDelay(getValidDepartureDelayInput(trainDeparture.getDepartureTime()));
     textPrinter.displaySuccessfulEdit();
     textPrinter.enterCommand();
   }
@@ -193,8 +193,8 @@ public class UserInterface {
    *
    * @param trainDeparture is the train departure that is being edited.
    */
-  public void editTrack(TrainDeparture trainDeparture) {
-    trainDeparture.setTrack(getValidDepartureTime(trainDeparture.getDepartureTime()));
+  private void editTrack(TrainDeparture trainDeparture) {
+    trainDeparture.setTrack(getValidDepartureTimeInput(trainDeparture.getDepartureTime()));
     textPrinter.displaySuccessfulEdit();
     textPrinter.enterCommand();
   }
@@ -242,7 +242,7 @@ public class UserInterface {
    *
    * @return Iterator of TrainDeparture if the destination is in the hashmap, else null.
    */
-  public Iterator<TrainDeparture> searchByDestination() {
+  public Iterator<TrainDeparture> searchByDestinationInput() {
     textPrinter.displayRequestDestination();
     String userInput = inputHandler.getString();
     return trainStation.getTrainFromDestination(userInput);
@@ -257,7 +257,7 @@ public class UserInterface {
    *
    * @return TrainDeparture if the train number is in the hashmap, else null.
    */
-  public TrainDeparture searchByNumber() {
+  private TrainDeparture searchByNumberInput() {
     boolean validInput = false;
     TrainDeparture trainDeparture = null;
     textPrinter.displayTrainNumberInput();
@@ -280,7 +280,7 @@ public class UserInterface {
    * @param trainDepartures is the iterator of train departures that is being displayed.
    * @param currentTime is the current time of the program.
    */
-  public void displayTrainDepartures(Iterator<TrainDeparture> trainDepartures,
+  private void displayTrainDepartures(Iterator<TrainDeparture> trainDepartures,
                                      LocalTime currentTime) {
     textPrinter.displayTrainDepartures(trainDepartures, currentTime);
   }
@@ -296,13 +296,13 @@ public class UserInterface {
    */
   private void addTrain() {
     int departureTime = getValidDepartureInput();
-    String departureLine = getValidDepartureLine(departureTime);
-    String departureDestination = getDepartureDestination();
-    int departureTrack = getValidDepartureTime(departureTime);
-    int delay = getDepartureDelay(departureTime);
+    String departureLine = getValidDepartureLineInput(departureTime);
+    String departureDestination = getDepartureDestinationInput();
+    int departureTrack = getValidDepartureTimeInput(departureTime);
+    int delay = getValidDepartureDelayInput(departureTime);
     boolean successfullyAdded = false;
     while (!successfullyAdded) {
-      int trainNumber = getValidTrainNumber();
+      int trainNumber = getValidTrainNumberInput();
       if (trainStation.addTrain(new TrainDeparture(departureTime, departureLine,
                trainNumber, departureDestination, departureTrack, delay))) {
         successfullyAdded = true;
@@ -347,7 +347,7 @@ public class UserInterface {
    * @param departureTime is the departure time of the train departure.
    * @return the line of the train departure as a string.
    */
-  private String getValidDepartureLine(int departureTime) {
+  private String getValidDepartureLineInput(int departureTime) {
     textPrinter.displayLineInput();
     boolean validInput = false;
     String lineInput = null;
@@ -368,7 +368,7 @@ public class UserInterface {
    *
    * @return the destination of the train departure as a string.
    */
-  private String getDepartureDestination() {
+  private String getDepartureDestinationInput() {
     textPrinter.displayDestinationInput();
     return inputHandler.getString();
   }
@@ -385,7 +385,7 @@ public class UserInterface {
    * @param time is the departure time of the train departure.
    * @return the track of the train departure as an int.
    */
-  private int getValidDepartureTime(int time) {
+  private int getValidDepartureTimeInput(int time) {
     textPrinter.displayTrackInput();
     boolean validTrack = false;
     boolean validInt = false;
@@ -423,7 +423,7 @@ public class UserInterface {
    * @param departureTime is the departure time of the train departure.
    * @return the delay of the train departure as an int.
    */
-  private int getDepartureDelay(int departureTime) {
+  private int getValidDepartureDelayInput(int departureTime) {
     textPrinter.displayDelayInput();
     boolean validInput = false;
     int delayInput = 0;
@@ -449,7 +449,7 @@ public class UserInterface {
    *
    * @return the train number of the train departure as an int.
    */
-  private int getValidTrainNumber() {
+  private int getValidTrainNumberInput() {
     textPrinter.displayTrainNumberInput();
     boolean validInput = false;
     String trackInput = null;

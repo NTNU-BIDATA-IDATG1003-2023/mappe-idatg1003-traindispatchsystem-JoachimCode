@@ -1,6 +1,7 @@
-package edu.ntnu.stud.dataStructures;
+package edu.ntnu.stud.datastructures;
 
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -117,8 +118,7 @@ public class TrainStation {
   public Iterator<TrainDeparture> getSortedDepartureList()  {
     return trainDepartures.values()
             .stream()
-            .sorted((departure1, departure2)
-                    -> departure1.getDepartureTime() - departure2.getDepartureTime())
+            .sorted(Comparator.comparingInt(TrainDeparture::getDepartureTime))
             .iterator();
   }
 
