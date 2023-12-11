@@ -523,29 +523,25 @@ public class UserInterface {
    */
   private int addDelay(int departureTime, int delayTime) {
     int actualDepartureTime;
-    int hours = departureTime / 100; // Extract hours (e.g., 13 from 1324)
-    int minutes = departureTime % 100; // Extract minutes (e.g., 24 from 1324)
+    int hours = departureTime / 100;
+    int minutes = departureTime % 100;
 
-    int delayMinutes = delayTime % 100; // Extract minutes from delayTime
-    int delayHours = delayTime / 100; // Extract hours from delayTime
+    int delayMinutes = delayTime % 100;
+    int delayHours = delayTime / 100;
 
-    minutes += delayMinutes; // Add delay to current minutes
-    hours += delayHours; // Add delay to current hours
+    minutes += delayMinutes;
+    hours += delayHours;
 
-    // Handle rollover if minutes exceed 60
     if (minutes >= 60) {
-      hours += minutes / 60; // Add excess minutes to hours
-      minutes %= 60; // Get remaining minutes after rollover
+      hours += minutes / 60;
+      minutes %= 60;
     }
 
-    // Handle rollover if hours exceed 24
     if (hours < 24) {
       actualDepartureTime = hours * 100 + minutes;
     } else {
       actualDepartureTime = -1;
     }
-
-    // Combine hours and minutes to get the new time in the format HHMM
     return actualDepartureTime;
   }
 
