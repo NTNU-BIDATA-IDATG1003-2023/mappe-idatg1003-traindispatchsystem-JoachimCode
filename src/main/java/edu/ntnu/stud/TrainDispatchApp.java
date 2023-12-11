@@ -7,9 +7,9 @@ import edu.ntnu.stud.gui.UserInterface;
  * It creates instances of train departures and
  * uses its info to display the correct data.
  *
- * @author JoachimDuong
- * @version 0.0.1
- * @since 4/10/2023
+ * @author Joachim Duong
+ * @version 1.0
+ * @since 0.0.1
  */
 public class TrainDispatchApp {
   TrainStation trainStation;

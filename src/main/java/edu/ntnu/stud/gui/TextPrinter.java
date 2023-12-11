@@ -9,9 +9,9 @@ import java.util.Iterator;
  *
  * <p>The class {@code TextPrinter} includes methods for printing instructions and errors.
  *
- * @author JoachimDuong
- * @version 0.0.1
- * @since 4/10/2023
+ * @author Joachim Duong
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class TextPrinter {
 
@@ -34,7 +34,7 @@ public class TextPrinter {
    * with the constant variables from the CommandVariables class.
    */
   public void displayCommands() {
-    System.out.println("Commands:");
+    printCommands();
     System.out.printf("%s - Displays all the commands%n", CommandVariables.HELP);
     System.out.printf("%s - Displays all the trains departures%n", CommandVariables.DISPLAY);
     System.out.printf("%s - Add a new train departure%n", CommandVariables.ADD);
@@ -49,7 +49,7 @@ public class TextPrinter {
    */
   public void displaySearchCommands() {
     System.out.println("Do you want to search by destination or train number?");
-    System.out.println("Commands:");
+    printCommands();
     System.out.printf("%s - Search by destination%n", CommandVariables.DESTINATION);
     System.out.printf("%s - Search by train number%n", CommandVariables.TRAINNUMBER);
   }
@@ -60,7 +60,7 @@ public class TextPrinter {
    */
   public void displayEditCommands() {
     System.out.println("Do you want to assign a track or a delay?");
-    System.out.println("Commands:");
+    printCommands();
     System.out.printf("%s - Assign a track%n", CommandVariables.TRACK);
     System.out.printf("%s - Assign a delay%n", CommandVariables.DELAY);
   }
@@ -241,7 +241,7 @@ public class TextPrinter {
    */
   public void displayInvalidLine() {
     System.err.println("Invalid line, this line is already in use for the departure time");
-    System.out.println("Try again!");
+    printTryAgain();
   }
 
   /**
@@ -250,7 +250,7 @@ public class TextPrinter {
   public void displayDelayInput() {
     System.out.println("Is there a delay to the train?");
     System.out.println("Type 0 if there is no delay");
-    System.out.println("If there is enter the delay in minutes");
+    System.out.println("If there is enter the delay in format HH:MM");
     System.out.println("Enter delay: ");
   }
 
@@ -284,7 +284,7 @@ public class TextPrinter {
    */
   public void displayInvalidInt() {
     System.err.println("Invalid input, please enter a positive number");
-    System.out.println("Try again!");
+    printTryAgain();
   }
 
   /**
@@ -293,7 +293,7 @@ public class TextPrinter {
   public void displayInvalidDelay() {
     System.err.println("Invalid input, this delay with make "
             + " train depart outside this applications scope (The next day)");
-    System.out.println("Try again!");
+    printTryAgain();
   }
 
   /**
@@ -301,7 +301,7 @@ public class TextPrinter {
    */
   public void displayInvalidTrainNumber() {
     System.err.println("Invalid train number, this train number is already in use");
-    System.out.println("Try again!");
+    printTryAgain();
   }
 
   /**
@@ -335,7 +335,7 @@ public class TextPrinter {
   public void invalidTimeEntry() {
     System.err.println("Invalid time entry, make sure you use the format"
             + " HH:MM and that the time is after the current time ");
-    System.out.println("Try again!");
+    printTryAgain();
   }
 
   /**
@@ -343,7 +343,7 @@ public class TextPrinter {
    */
   public void invalidDelayEntry() {
     System.err.println("Invalid delay entry, make sure you use the format HH:MM");
-    System.out.println("Try again!");
+    printTryAgain();
   }
 
   /**
@@ -351,5 +351,26 @@ public class TextPrinter {
    */
   public void displaySuccessfulEdit() {
     System.out.println("Successfully edited train departure");
+  }
+  /*
+  * This is a private method that prints the commands message, because
+  * it is required many times.
+  */
+  private void printCommands(){
+    System.out.println("Commands:");
+  }
+  /*
+  * This is a private method that prints the try again message, because
+  * it is required many times.
+   */
+  private void printTryAgain(){
+    System.out.println("Try again!");
+  }
+
+  /**
+   * Prints a feedback that the train departure was successfully quit .
+   */
+  public void displayEndMessage() {
+    System.out.println("Thank you for using the train dispatch system!");
   }
 }

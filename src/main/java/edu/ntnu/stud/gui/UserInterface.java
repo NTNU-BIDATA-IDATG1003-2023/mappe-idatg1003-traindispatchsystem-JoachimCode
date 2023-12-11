@@ -20,9 +20,9 @@ import java.util.Iterator;
  * <p>The class {@code UserInterface} includes methods for initializing menus,
  * methods for getting the correct input and methods to change fields in the TrainStation.
  *
- * @author JoachimDuong
- * @version 0.0.1
- * @since 4/10/2023
+ * @author Joachim Duong
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class UserInterface {
   /*
@@ -33,7 +33,7 @@ public class UserInterface {
   /*
    * This variable represents the trainStation, and is the object of the program's station.
    */
-  private final TrainStation trainStation;
+  private TrainStation trainStation;
   /*
    * This variable represents the inputHandler,
    * which is the class that handles all the input from the user.
@@ -58,7 +58,7 @@ public class UserInterface {
    */
   public UserInterface(TrainStation trainStation) {
     textPrinter = new TextPrinter();
-    this.trainStation = trainStation;
+    setTrainStation(trainStation);
     inputHandler = new InputHandler();
     validator = new Validator();
     running = true;
@@ -86,7 +86,7 @@ public class UserInterface {
    */
   public void menuSelect() {
     while (running) {
-      String userCommand = inputHandler.getCommand();
+      String userCommand = inputHandler.getString();
       switch (userCommand) {
         case CommandVariables.HELP -> textPrinter.displayCommands();
         case CommandVariables.DISPLAY ->
@@ -96,7 +96,7 @@ public class UserInterface {
         case CommandVariables.EDIT -> editMenu();
         case CommandVariables.SET_TIME -> changeClock();
         case CommandVariables.SEARCH -> searchMenu();
-        case CommandVariables.QUIT -> running = false;
+        case CommandVariables.QUIT -> endProgram();
         default -> textPrinter.displayInvalidCommand();
       }
     }
@@ -113,11 +113,11 @@ public class UserInterface {
    * which ensures it is a valid destination. It will then display the searched train departures.
    * If the user enters an invalid command, it will display an error message.
    */
-  public void searchMenu() {
+  private void searchMenu() {
     boolean searching = true;
     while (searching) {
-      textPrinter.displayEditCommands();
-      String userCommand = inputHandler.getCommand();
+      textPrinter.displaySearchCommands();
+      String userCommand = inputHandler.getString();
       switch (userCommand) {
         case (CommandVariables.TRAINNUMBER) -> {
           TrainDeparture searchedDeparture = searchByNumber();
@@ -148,11 +148,11 @@ public class UserInterface {
    * If the user enters an invalid command, it will display
    * an error message, and ask for a new command.
    */
-  public void editMenu() {
+  private void editMenu() {
     boolean searching = true;
     while (searching) {
       textPrinter.displayEditCommands();
-      String userCommand = inputHandler.getCommand();
+      String userCommand = inputHandler.getString();
       switch (userCommand) {
         case (CommandVariables.DELAY) -> {
           TrainDeparture searchedDepartureDelay = searchByNumber();
@@ -294,7 +294,7 @@ public class UserInterface {
    * If the train number is not in the hashmap, it will add the
    * train departure and display a successful add message.
    */
-  public void addTrain() {
+  private void addTrain() {
     int departureTime = getValidDepartureInput();
     String departureLine = getValidDepartureLine(departureTime);
     String departureDestination = getDepartureDestination();
@@ -323,13 +323,13 @@ public class UserInterface {
    *
    * @return the departure time of the train departure as an int.
    */
-  public int getValidDepartureInput() {
+  private int getValidDepartureInput() {
     textPrinter.displayDepartureTimeInput();
     boolean validInput = false;
     LocalTime timeInput = null;
     while (!validInput) {
-      timeInput = inputHandler.getTimeInput(trainStation.getTime());
-      if (timeInput != null) {
+      timeInput = inputHandler.getTimeInput();
+      if (timeInput != null && timeInput.isAfter(trainStation.getTime())){
         validInput = true;
       } else {
         textPrinter.invalidTimeEntry();
@@ -347,7 +347,7 @@ public class UserInterface {
    * @param departureTime is the departure time of the train departure.
    * @return the line of the train departure as a string.
    */
-  public String getValidDepartureLine(int departureTime) {
+  private String getValidDepartureLine(int departureTime) {
     textPrinter.displayLineInput();
     boolean validInput = false;
     String lineInput = null;
@@ -368,7 +368,7 @@ public class UserInterface {
    *
    * @return the destination of the train departure as a string.
    */
-  public String getDepartureDestination() {
+  private String getDepartureDestination() {
     textPrinter.displayDestinationInput();
     return inputHandler.getString();
   }
@@ -385,7 +385,7 @@ public class UserInterface {
    * @param time is the departure time of the train departure.
    * @return the track of the train departure as an int.
    */
-  public int getValidDepartureTime(int time) {
+  private int getValidDepartureTime(int time) {
     textPrinter.displayTrackInput();
     boolean validTrack = false;
     boolean validInt = false;
@@ -423,13 +423,13 @@ public class UserInterface {
    * @param departureTime is the departure time of the train departure.
    * @return the delay of the train departure as an int.
    */
-  public int getDepartureDelay(int departureTime) {
+  private int getDepartureDelay(int departureTime) {
     textPrinter.displayDelayInput();
     boolean validInput = false;
     int delayInput = 0;
     LocalTime time;
     while (!validInput) {
-      time = inputHandler.getTimeInputDelay(trainStation.getTime());
+      time = inputHandler.getTimeInput();
       if (time == null) {
         textPrinter.invalidDelayEntry();
       } else if (addDelay(departureTime, getTimeAsInt(time)) == -1) {
@@ -449,7 +449,7 @@ public class UserInterface {
    *
    * @return the train number of the train departure as an int.
    */
-  public int getValidTrainNumber() {
+  private int getValidTrainNumber() {
     textPrinter.displayTrainNumberInput();
     boolean validInput = false;
     String trackInput = null;
@@ -473,12 +473,12 @@ public class UserInterface {
    * In the end it will format the time and display a message saying that the time has been changed.
    * if the time is invalid, it will display an error message and ask for a new time.
    */
-  public void changeClock() {
+  private void changeClock() {
     textPrinter.displayEnterTime(trainStation.getTime());
     boolean validInput = false;
     while (!validInput) {
-      LocalTime time = inputHandler.getTimeInput(trainStation.getTime());
-      if (time != null) {
+      LocalTime time = inputHandler.getTimeInput();
+      if (time != null && time.isAfter(trainStation.getTime())) {
         trainStation.changeClock(time);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         System.out.println("Set current time to: " + time.format(formatter));
@@ -505,7 +505,7 @@ public class UserInterface {
    * @param delayTime is the delay of the train departure.
    * @return the new time as an int and -1 if it exceeds 24:00.
    */
-  public int addDelay(int departureTime, int delayTime) {
+  private int addDelay(int departureTime, int delayTime) {
     int actualDepartureTime;
     int hours = departureTime / 100; // Extract hours (e.g., 13 from 1324)
     int minutes = departureTime % 100; // Extract minutes (e.g., 24 from 1324)
@@ -540,7 +540,28 @@ public class UserInterface {
    * @param time is the LocalTime that is being converted to an int.
    * @return the time as an int.
    */
-  public int getTimeAsInt(LocalTime time) {
+  private int getTimeAsInt(LocalTime time) {
     return time.getHour() * 100 + time.getMinute();
+  }
+
+  /**
+   * This method sets the trainStation of the userInterface.
+   * @throws IllegalArgumentException if the trainStation is null.
+   * @param trainStation is the trainStation that the userInterface will use.
+   */
+  private void setTrainStation(TrainStation trainStation) {
+    if(trainStation == null){
+      throw new IllegalArgumentException("TrainStation cannot be null");
+    } else {
+      this.trainStation = trainStation;
+    }
+  }
+
+  /**
+   * This method ends the program by setting running to false and displaying an end message.
+   */
+  private void endProgram(){
+    running = false;
+    textPrinter.displayEndMessage();
   }
 }

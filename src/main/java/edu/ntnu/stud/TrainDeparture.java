@@ -13,18 +13,18 @@ package edu.ntnu.stud;
  * </pre></blockquote>
  *
  * <p>The class {@code TrainDeparture} includes methods for accessors and mutators.
- *
+ * @author Joachim Duong
+ * @version 1.0.0
  * @since 1.0
  */
 
 public class TrainDeparture {
   /*
    * This variable is the time that is to be displayed and is
-   * of the TimeDisplay class. It is not an int, because
-   * it needs the abilities to be displayed and incremented
-   * like a clock, therefore a
-   * separate class is a more efficient solution
-   * for that purpose.
+   * of the TimeDisplay class. It is an int because it is
+   * easier and faster to calculate with. It is formatted in
+   * an 4 digit int, where the 2 first digits is the hours and
+   * the last is the minutes.
    */
   private int departureTime;
   /*
@@ -95,7 +95,7 @@ public class TrainDeparture {
    *
    * @param departureTime is the departure time of the train departure.
    */
-  public void setDepartureTime(int departureTime) {
+  private void setDepartureTime(int departureTime) {
     if (departureTime < 0) {
       this.departureTime = -1;
     } else {
@@ -117,7 +117,7 @@ public class TrainDeparture {
    *
    * @param line is the line of the train departure.
    */
-  public void setLine(String line) {
+  private void setLine(String line) {
     if (line == null || line.isEmpty()) {
       this.line = "invalid";
     } else {
@@ -141,7 +141,7 @@ public class TrainDeparture {
    *
    * @param trainNumber the train number of the train departure.
    */
-  public void setTrainNumber(int trainNumber) {
+  private void setTrainNumber(int trainNumber) {
     if (trainNumber < 0) {
       this.trainNumber = -1;
     } else {
@@ -164,7 +164,7 @@ public class TrainDeparture {
    *
    * @param destination the destination of the train departure.
    */
-  public void setDestination(String destination) {
+  private void setDestination(String destination) {
     if (destination == null || destination.isEmpty()) {
       this.destination = "invalid";
     } else {

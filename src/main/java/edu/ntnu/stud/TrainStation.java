@@ -18,9 +18,9 @@ import java.util.Iterator;
  * <p>The class {@code TrainStation} includes methods for accessing and modifying the
  * hashmap of {@code TrainDeparture}s. It also includes methods for accessing and modifying the
  *
- * @author JoachimDuong
- * @version 0.0.1
- * @since 4/10/2023
+ * @author Joachim Duong
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class TrainStation {
   /*
@@ -101,7 +101,7 @@ public class TrainStation {
    * Removes all trains from the hashmap with an earlier departure time (including delay)
    * than the current time.
    */
-  public void removeEarlierDepartures() {
+  private void removeEarlierDepartures() {
     trainDepartures.values()
             .removeIf(departure -> (departure.getDepartureTime() + departure.getDelay())
                     < timeAsInt(currentTime));
